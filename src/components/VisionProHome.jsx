@@ -20,8 +20,7 @@ import {
   Clock,
   Tag,
   Flame,
-  Award,
-  Play
+  Award
 } from 'lucide-react';
 import { VYBE_DATA } from '../data/vybeData';
 
@@ -35,87 +34,117 @@ export default function VisionProHome({
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredHotels = VYBE_DATA.hotels.filter(h =>
-    h.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    h.address.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // The primary hero hotel as specified by user
+  const heroHotel = VYBE_DATA.hotels[0]; // Motion Hotel
+
+  const otherHotels = VYBE_DATA.hotels.slice(1);
 
   return (
-    <div className="space-y-28 pb-32 text-white">
-      {/* 1. HERO SECTION: Exact Apple Vision Pro Hero Architecture */}
-      <section className="relative text-center pt-8 pb-16 px-4 max-w-5xl mx-auto space-y-6">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-semibold text-purple-300">
-          <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-          <span>Spatial City Discovery Platform • Uyo, Nigeria</span>
+    <div className="space-y-28 pb-32 text-[#1d1d1f]">
+      {/* 1. EXACT APPLE VISION PRO HERO SECTION MATCHING USER'S SCREENSHOTS */}
+      <section className="relative w-full min-h-[82vh] flex flex-col justify-between overflow-hidden bg-white px-4 sm:px-8 pt-4 pb-12">
+        {/* Full-width Center Hero Image (Covers the screen with human subject / luxury backdrop) */}
+        <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
+          <img
+            src={heroHotel.image}
+            alt={heroHotel.name}
+            className="w-full h-full object-cover object-center filter contrast-[1.03] brightness-[1.02]"
+          />
+          {/* Subtle Apple White Vignette & Gradient Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/40 to-transparent w-full md:w-3/5" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent h-48 bottom-0" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-transparent to-transparent h-24 top-0" />
         </div>
 
-        <h1 className="apple-headline font-black tracking-tight">
-          Welcome to the era of <br />
-          <span className="bg-gradient-to-r from-purple-400 via-fuchsia-300 to-indigo-300 bg-clip-text text-transparent">
-            spatial city living.
-          </span>
-        </h1>
+        {/* Top Empty Space to respect Subnav */}
+        <div className="relative z-10" />
 
-        <p className="apple-subhead max-w-2xl mx-auto font-normal text-slate-300 leading-relaxed">
-          VYBE seamlessly blends hotels, verified dining, living nightlife and events in Uyo into one breathtaking experience.
-        </p>
+        {/* Center-Left Content: Exact location of "Vision Pro" and "New powerful M5 chip..." */}
+        <div className="relative z-10 max-w-2xl px-4 sm:px-8 py-8 space-y-4">
+          {/* Small Brand Eyebrow */}
+          <div className="flex items-center gap-2">
+            <span className="text-2xl font-black tracking-tight text-[#1d1d1f] flex items-center gap-1 font-display">
+              VYBE
+              <span className="w-2.5 h-2.5 rounded-full bg-purple-600 shadow-[0_0_8px_#9333ea]" />
+            </span>
+            <span className="text-xs uppercase tracking-widest text-[#86868b] font-semibold pl-2 border-l border-slate-300">
+              Verified Stays • Uyo
+            </span>
+          </div>
 
-        {/* Apple Vision Pro Interactive Floating Cinema Tile */}
-        <div className="relative mt-12 rounded-[40px] overflow-hidden border border-white/20 shadow-[0_40px_100px_rgba(0,0,0,0.9)] max-w-4xl mx-auto h-[480px] sm:h-[560px] group">
-          <img
-            src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=2000&q=90"
-            alt="Uyo Luxury Night"
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+          {/* Hotel Name taking the exact position and styling of "Vision Pro" */}
+          <h1 className="text-5xl sm:text-7xl font-extrabold text-[#1d1d1f] tracking-tight leading-[1.05] font-display">
+            {heroHotel.name}
+          </h1>
 
-          {/* Vision Pro Floating Glass Search Dock */}
-          <div className="absolute inset-x-4 sm:inset-x-8 bottom-8 p-3 sm:p-4 rounded-3xl sm:rounded-full bg-black/60 backdrop-blur-3xl border border-white/20 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-2xl">
+          {/* Hotel Location taking the exact position of "New powerful M5 chip and comfortable Dual Knit Band." */}
+          <p className="text-xl sm:text-2xl font-medium text-[#1d1d1f] leading-snug">
+            {heroHotel.address}. Premier luxury suites, poolside lounge, and 24/7 power in Uyo.
+          </p>
+
+          {/* Action Buttons: "Book a demo" replaced with PRICE, and "Buy" replaced with VIEW */}
+          <div className="flex flex-wrap items-center gap-4 pt-4">
+            {/* Replaces "Book a demo" -> Price Button */}
+            <div className="apple-btn-outline text-base py-3 px-6 font-semibold cursor-default">
+              ₦{heroHotel.pricePerNight.toLocaleString()} / night
+            </div>
+
+            {/* Replaces "Buy" -> View Button */}
+            <button
+              onClick={() => onSelectHotel(heroHotel)}
+              className="apple-btn-black text-base py-3 px-7 font-semibold shadow-sm active:scale-95"
+            >
+              View
+            </button>
+          </div>
+        </div>
+
+        {/* Bottom Floating Search Dock */}
+        <div className="relative z-10 max-w-4xl mx-auto w-full px-4 pt-4">
+          <div className="bg-white/95 backdrop-blur-2xl p-2.5 rounded-full border border-slate-200/90 shadow-xl flex items-center justify-between gap-3">
             <div className="flex items-center gap-3 w-full px-4">
-              <Search className="w-5 h-5 text-purple-400 flex-shrink-0" />
+              <Search className="w-5 h-5 text-purple-600 flex-shrink-0" />
               <input
                 type="text"
                 placeholder="Search hotels, fine dining, events or areas in Uyo..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-transparent border-none outline-none text-white placeholder-slate-400 text-sm sm:text-base"
+                className="w-full bg-transparent border-none outline-none text-[#1d1d1f] placeholder-slate-400 text-sm sm:text-base"
               />
             </div>
 
-            <div className="flex items-center gap-2 w-full sm:w-auto justify-end px-2">
-              <button
-                onClick={onSelectExplore}
-                className="apple-btn-purple flex items-center gap-2 text-xs sm:text-sm whitespace-nowrap"
-              >
-                <Compass className="w-4 h-4" />
-                <span>Launch Living Map</span>
-              </button>
-            </div>
+            <button
+              onClick={onSelectExplore}
+              className="apple-btn-blue text-xs sm:text-sm py-2 px-5 flex items-center gap-1.5 whitespace-nowrap"
+            >
+              <Compass className="w-4 h-4" />
+              <span>Living Map</span>
+            </button>
           </div>
         </div>
       </section>
 
-      {/* 2. APPLE-STYLE SECTION: "An infinite canvas for discovery" */}
-      <section className="space-y-12 max-w-6xl mx-auto px-4">
+      {/* 2. APPLE-STYLE SECTION: "Featured Stays in Uyo" (Apple Tiles Grid) */}
+      <section className="space-y-12 max-w-7xl mx-auto px-4 sm:px-8">
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <span className="apple-eyebrow text-purple-400">Discoveries</span>
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-            An infinite canvas for discovering Uyo.
+          <span className="apple-eyebrow text-purple-600">Verified Hospitality</span>
+          <h2 className="text-3xl sm:text-5xl font-black text-[#1d1d1f] tracking-tight">
+            An infinite canvas for discovering stays.
           </h2>
-          <p className="text-base sm:text-lg text-slate-400">
-            From verified luxury hotels on Udo Udoma to late-night culinary spots on Nwaniba Road — explore everything in real time.
+          <p className="text-base sm:text-lg text-[#86868b]">
+            From serviced penthouses to boutique resorts across Akwa Ibom State.
           </p>
         </div>
 
         {/* 3-Column Apple Tile Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredHotels.slice(0, 3).map((hotel) => {
+          {otherHotels.map((hotel) => {
             const isSaved = savedIds.includes(hotel.id);
             return (
               <div
                 key={hotel.id}
                 onClick={() => onSelectHotel(hotel)}
-                className="apple-tile cursor-pointer flex flex-col justify-between border border-white/10 group bg-[#161617]"
+                className="apple-tile cursor-pointer flex flex-col justify-between group bg-[#fbfbfd] border border-slate-200/80"
               >
                 <div className="relative h-64 overflow-hidden">
                   <img
@@ -123,10 +152,10 @@ export default function VisionProHome({
                     alt={hotel.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#161617] via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
-                  <div className="absolute top-4 inset-x-4 flex justify-between items-center">
-                    <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-[11px] font-bold text-white border border-white/15">
+                  <div className="absolute top-4 inset-x-4 flex justify-between items-center text-white">
+                    <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-[11px] font-bold">
                       {hotel.badge}
                     </span>
                     <button
@@ -144,38 +173,38 @@ export default function VisionProHome({
                 <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
+                      <h3 className="text-xl font-bold text-[#1d1d1f] group-hover:text-purple-600 transition-colors">
                         {hotel.name}
                       </h3>
                       {hotel.isVerified && (
-                        <ShieldCheck className="w-4 h-4 text-purple-400" />
+                        <ShieldCheck className="w-4 h-4 text-purple-600" />
                       )}
                     </div>
 
-                    <div className="flex items-center gap-2 text-xs text-slate-400">
-                      <Star className="w-3.5 h-3.5 fill-amber-300 text-amber-300" />
-                      <span className="text-white font-semibold">{hotel.rating}</span>
+                    <div className="flex items-center gap-2 text-xs text-[#86868b]">
+                      <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                      <span className="text-[#1d1d1f] font-semibold">{hotel.rating}</span>
                       <span>({hotel.reviewsCount} reviews)</span>
                       <span>•</span>
                       <span className="truncate">{hotel.address}</span>
                     </div>
 
-                    <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
                       {hotel.description}
                     </p>
                   </div>
 
-                  <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+                  <div className="pt-4 border-t border-slate-200/80 flex items-center justify-between">
                     <div>
-                      <span className="text-lg font-black text-white">
+                      <span className="text-lg font-black text-[#1d1d1f]">
                         ₦{hotel.pricePerNight.toLocaleString()}
                       </span>
-                      <span className="text-xs text-slate-400"> / night</span>
+                      <span className="text-xs text-[#86868b]"> / night</span>
                     </div>
 
-                    <span className="apple-link text-xs">
-                      View Rooms <ChevronRight className="w-3.5 h-3.5" />
-                    </span>
+                    <button className="apple-btn-black text-xs py-1.5 px-4">
+                      View
+                    </button>
                   </div>
                 </div>
               </div>
@@ -185,11 +214,11 @@ export default function VisionProHome({
       </section>
 
       {/* 3. APPLE-STYLE SECTION: "Taste of the City" */}
-      <section className="space-y-12 max-w-6xl mx-auto px-4">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6">
+      <section className="space-y-12 max-w-7xl mx-auto px-4 sm:px-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-6">
           <div>
-            <span className="apple-eyebrow text-amber-400">Culinary & Dining</span>
-            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight mt-1">
+            <span className="apple-eyebrow text-amber-600">Culinary & Dining</span>
+            <h2 className="text-3xl sm:text-4xl font-black text-[#1d1d1f] tracking-tight mt-1">
               Top Restaurants in Uyo.
             </h2>
           </div>
@@ -203,7 +232,7 @@ export default function VisionProHome({
           {VYBE_DATA.restaurants.map((rest) => (
             <div
               key={rest.id}
-              className="apple-tile border border-white/10 group cursor-pointer"
+              className="apple-tile border border-slate-200/80 group cursor-pointer bg-[#fbfbfd]"
             >
               <div className="relative h-56 overflow-hidden">
                 <img
@@ -211,9 +240,9 @@ export default function VisionProHome({
                   alt={rest.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#161617] via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-3 left-4 right-4 flex justify-between items-center text-xs text-white">
-                  <span className="font-semibold text-slate-300">{rest.area}</span>
+                  <span className="font-semibold text-slate-200">{rest.area}</span>
                   <span className="font-bold text-amber-300 flex items-center gap-1">
                     <Star className="w-3.5 h-3.5 fill-amber-300 text-amber-300" />
                     {rest.rating} ({rest.reviewsCount})
@@ -222,17 +251,17 @@ export default function VisionProHome({
               </div>
 
               <div className="p-6 space-y-3">
-                <h3 className="text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
+                <h3 className="text-xl font-bold text-[#1d1d1f] group-hover:text-purple-600 transition-colors">
                   {rest.name}
                 </h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <p className="text-xs text-slate-600 leading-relaxed">
                   {rest.description}
                 </p>
                 <div className="flex gap-2 pt-2">
                   {rest.cuisines.map((c, i) => (
                     <span
                       key={i}
-                      className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-semibold text-slate-300"
+                      className="px-3 py-1 rounded-full bg-purple-50 border border-purple-200 text-[10px] font-semibold text-purple-700"
                     >
                       {c}
                     </span>
@@ -245,11 +274,11 @@ export default function VisionProHome({
       </section>
 
       {/* 4. APPLE-STYLE SECTION: "Entertainment & Pulse" */}
-      <section className="space-y-12 max-w-6xl mx-auto px-4">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6">
+      <section className="space-y-12 max-w-7xl mx-auto px-4 sm:px-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-6">
           <div>
-            <span className="apple-eyebrow text-rose-400">Events & Nightlife</span>
-            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight mt-1">
+            <span className="apple-eyebrow text-rose-600">Events & Nightlife</span>
+            <h2 className="text-3xl sm:text-4xl font-black text-[#1d1d1f] tracking-tight mt-1">
               What's happening in Uyo.
             </h2>
           </div>
@@ -263,33 +292,33 @@ export default function VisionProHome({
           {VYBE_DATA.events.map((evt) => (
             <div
               key={evt.id}
-              className="apple-tile h-80 relative flex flex-col justify-end p-6 border border-white/10 group cursor-pointer"
+              className="apple-tile h-80 relative flex flex-col justify-end p-6 border border-slate-200/80 group cursor-pointer"
             >
               <img
                 src={evt.image}
                 alt={evt.title}
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#161617] via-[#161617]/70 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
 
-              <div className="relative z-10 space-y-2">
+              <div className="relative z-10 space-y-2 text-white">
                 <div className="flex items-center justify-between">
                   <span className="px-3 py-1 rounded-full bg-purple-600 text-[10px] font-black uppercase tracking-wider text-white">
                     {evt.badge}
                   </span>
-                  <span className="text-xs font-semibold text-slate-300">{evt.date} • {evt.time}</span>
+                  <span className="text-xs font-semibold text-slate-200">{evt.date} • {evt.time}</span>
                 </div>
 
                 <h3 className="text-lg font-bold text-white group-hover:text-purple-300 transition-colors">
                   {evt.title}
                 </h3>
-                <p className="text-xs text-slate-400">{evt.location}</p>
+                <p className="text-xs text-slate-300">{evt.location}</p>
 
-                <div className="pt-3 border-t border-white/10 flex items-center justify-between">
+                <div className="pt-3 border-t border-white/20 flex items-center justify-between">
                   <span className="text-sm font-black text-white">
                     ₦{evt.price.toLocaleString()}
                   </span>
-                  <button className="apple-btn-primary text-xs py-1.5 px-4">
+                  <button className="apple-btn-blue text-xs py-1.5 px-4">
                     Reserve Pass
                   </button>
                 </div>
@@ -300,11 +329,11 @@ export default function VisionProHome({
       </section>
 
       {/* 5. APPLE-STYLE SECTION: "Why VYBE" Spec Pillars */}
-      <section className="rounded-[40px] bg-[#161617] border border-white/10 p-8 sm:p-14 max-w-6xl mx-auto space-y-8">
+      <section className="rounded-[40px] bg-[#fbfbfd] border border-slate-200/80 p-8 sm:p-14 max-w-7xl mx-auto space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
-          <span className="apple-eyebrow text-purple-400">Trust & Hospitality</span>
-          <h3 className="text-3xl font-black text-white">Why Discover & Book with VYBE?</h3>
-          <p className="text-sm text-slate-400">
+          <span className="apple-eyebrow text-purple-600">Trust & Hospitality</span>
+          <h3 className="text-3xl font-black text-[#1d1d1f]">Why Discover & Book with VYBE?</h3>
+          <p className="text-sm text-[#86868b]">
             A verified platform for local stays, events and local commerce in Akwa Ibom.
           </p>
         </div>
@@ -313,11 +342,11 @@ export default function VisionProHome({
           {VYBE_DATA.whyBook.map((item, idx) => (
             <div
               key={idx}
-              className="p-6 rounded-3xl bg-[#1c1c1e] border border-white/5 space-y-2 hover:border-white/20 transition-colors"
+              className="p-6 rounded-3xl bg-white border border-slate-200/80 space-y-2 shadow-xs hover:border-purple-300 transition-colors"
             >
-              <CheckCircle2 className="w-8 h-8 text-purple-400 mb-2" />
-              <h4 className="font-bold text-base text-white">{item.title}</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">{item.subtitle}</p>
+              <CheckCircle2 className="w-8 h-8 text-purple-600 mb-2" />
+              <h4 className="font-bold text-base text-[#1d1d1f]">{item.title}</h4>
+              <p className="text-xs text-[#86868b] leading-relaxed">{item.subtitle}</p>
             </div>
           ))}
         </div>
