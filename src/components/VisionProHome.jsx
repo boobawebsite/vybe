@@ -13,14 +13,15 @@ import {
   GlassWater,
   Ticket,
   Palmtree,
-  MoreHorizontal,
   Compass,
   ArrowRight,
   ShieldCheck,
   CheckCircle2,
-  TrendingUp,
+  Clock,
+  Tag,
   Flame,
-  Award
+  Award,
+  Play
 } from 'lucide-react';
 import { VYBE_DATA } from '../data/vybeData';
 
@@ -34,240 +35,147 @@ export default function VisionProHome({
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const categoryTabs = [
-    { id: 'all', label: 'All Stays', icon: BedDouble },
-    { id: 'hotels', label: 'Hotels', icon: BedDouble },
-    { id: 'restaurants', label: 'Restaurants', icon: UtensilsCrossed },
-    { id: 'nightlife', label: 'Nightlife', icon: GlassWater },
-    { id: 'events', label: 'Events', icon: Ticket },
-    { id: 'resorts', label: 'Resorts', icon: Palmtree },
-  ];
-
   const filteredHotels = VYBE_DATA.hotels.filter(h =>
     h.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     h.address.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
-    <div className="space-y-16 pb-24 text-slate-900">
-      {/* 1. HERO SECTION: Apple Vision Pro Cinematics in Clean Light Spatial Style */}
-      <section className="relative rounded-[32px] md:rounded-[48px] overflow-hidden border border-slate-200/80 shadow-xl min-h-[500px] md:min-h-[580px] flex flex-col justify-between p-6 sm:p-10 md:p-14 bg-white">
-        {/* Cinematic Backdrop with Subtle Light Fog Overlay */}
-        <div className="absolute inset-0 z-0">
+    <div className="space-y-28 pb-32 text-white">
+      {/* 1. HERO SECTION: Exact Apple Vision Pro Hero Architecture */}
+      <section className="relative text-center pt-8 pb-16 px-4 max-w-5xl mx-auto space-y-6">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-semibold text-purple-300">
+          <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+          <span>Spatial City Discovery Platform • Uyo, Nigeria</span>
+        </div>
+
+        <h1 className="apple-headline font-black tracking-tight">
+          Welcome to the era of <br />
+          <span className="bg-gradient-to-r from-purple-400 via-fuchsia-300 to-indigo-300 bg-clip-text text-transparent">
+            spatial city living.
+          </span>
+        </h1>
+
+        <p className="apple-subhead max-w-2xl mx-auto font-normal text-slate-300 leading-relaxed">
+          VYBE seamlessly blends hotels, verified dining, living nightlife and events in Uyo into one breathtaking experience.
+        </p>
+
+        {/* Apple Vision Pro Interactive Floating Cinema Tile */}
+        <div className="relative mt-12 rounded-[40px] overflow-hidden border border-white/20 shadow-[0_40px_100px_rgba(0,0,0,0.9)] max-w-4xl mx-auto h-[480px] sm:h-[560px] group">
           <img
             src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=2000&q=90"
-            alt="Uyo Luxury Stay"
-            className="w-full h-full object-cover opacity-85 scale-105 transition-transform duration-1000 ease-out"
+            alt="Uyo Luxury Night"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/40 to-slate-950/20" />
-        </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
 
-        {/* Hero Top Pill */}
-        <div className="relative z-10 flex flex-wrap items-center justify-between gap-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 backdrop-blur-xl border border-white/60 text-xs font-semibold text-slate-900 shadow-sm">
-            <Sparkles className="w-4 h-4 text-purple-600 animate-pulse" />
-            <span>Spatial Discovery Layer for Uyo</span>
-          </div>
-
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 backdrop-blur-xl border border-white/60 text-xs font-semibold text-slate-800 shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-            <span>Live City Pulse • Akwa Ibom</span>
-          </div>
-        </div>
-
-        {/* Hero Headline & Value Proposition */}
-        <div className="relative z-10 max-w-2xl space-y-4 my-auto py-6 text-white">
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[1.05] font-display">
-            More Than Stays. <br />
-            <span className="bg-gradient-to-r from-purple-300 via-pink-200 to-indigo-200 bg-clip-text text-transparent">
-              Discover Experiences.
-            </span>
-          </h1>
-          <p className="text-base sm:text-xl text-slate-200 font-normal leading-relaxed max-w-xl">
-            Hotels, restaurants, nightlife, lounges and events — all in Uyo. Book real-time rooms and explore your city through a unified spatial lens.
-          </p>
-        </div>
-
-        {/* Hero Glass Floating Search Bar */}
-        <div className="relative z-10 w-full max-w-3xl">
-          <div className="bg-white/95 backdrop-blur-2xl p-2.5 rounded-3xl md:rounded-full flex flex-col md:flex-row items-center gap-3 border border-white/80 shadow-2xl">
-            <div className="flex items-center gap-3 flex-1 w-full px-4 py-2">
-              <Search className="w-5 h-5 text-purple-600 flex-shrink-0" />
+          {/* Vision Pro Floating Glass Search Dock */}
+          <div className="absolute inset-x-4 sm:inset-x-8 bottom-8 p-3 sm:p-4 rounded-3xl sm:rounded-full bg-black/60 backdrop-blur-3xl border border-white/20 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-2xl">
+            <div className="flex items-center gap-3 w-full px-4">
+              <Search className="w-5 h-5 text-purple-400 flex-shrink-0" />
               <input
                 type="text"
                 placeholder="Search hotels, fine dining, events or areas in Uyo..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-transparent border-none outline-none text-slate-900 placeholder-slate-400 text-sm md:text-base font-normal"
+                className="w-full bg-transparent border-none outline-none text-white placeholder-slate-400 text-sm sm:text-base"
               />
             </div>
 
-            <div className="flex items-center gap-2 w-full md:w-auto justify-end px-2">
+            <div className="flex items-center gap-2 w-full sm:w-auto justify-end px-2">
               <button
                 onClick={onSelectExplore}
-                className="flex items-center gap-2 px-5 py-3 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-all"
-              >
-                <SlidersHorizontal className="w-4 h-4 text-purple-600" />
-                <span>Filters</span>
-              </button>
-
-              <button
-                onClick={onSelectExplore}
-                className="flex items-center gap-2 px-6 py-3 rounded-full bg-purple-600 hover:bg-purple-700 text-white text-xs md:text-sm font-bold shadow-md shadow-purple-600/20 transition-all active:scale-95"
+                className="apple-btn-purple flex items-center gap-2 text-xs sm:text-sm whitespace-nowrap"
               >
                 <Compass className="w-4 h-4" />
-                <span>Living Map</span>
+                <span>Launch Living Map</span>
               </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. CATEGORY PILLS BAR (Apple Clean Pill Dock) */}
-      <section className="flex items-center gap-3 overflow-x-auto hide-scrollbar py-2">
-        {categoryTabs.map((cat) => {
-          const Icon = cat.icon;
-          const isActive = selectedCategory === cat.id;
-          return (
-            <button
-              key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
-              className={`flex items-center gap-2.5 px-6 py-3.5 rounded-full text-xs font-bold transition-all border whitespace-nowrap shadow-xs ${
-                isActive
-                  ? 'bg-purple-600 text-white border-purple-600 shadow-md shadow-purple-600/20'
-                  : 'bg-white text-slate-700 border-slate-200/80 hover:border-purple-300 hover:text-purple-600'
-              }`}
-            >
-              <Icon className="w-4 h-4" />
-              <span>{cat.label}</span>
-            </button>
-          );
-        })}
-      </section>
-
-      {/* 3. FEATURED STAYS & HOTELS (Wide Apple Vision Pro Light Grid) */}
-      <section className="space-y-6">
-        <div className="flex items-end justify-between border-b border-slate-200 pb-4">
-          <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-600 uppercase tracking-widest mb-1">
-              <Award className="w-3.5 h-3.5" />
-              <span>Verified Selection</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-              Featured Stays in Uyo
-            </h2>
-          </div>
-          <button
-            onClick={onSelectExplore}
-            className="text-xs sm:text-sm font-bold text-purple-600 hover:text-purple-700 flex items-center gap-1 transition-colors"
-          >
-            <span>See All ({VYBE_DATA.hotels.length})</span>
-            <ChevronRight className="w-4 h-4" />
-          </button>
+      {/* 2. APPLE-STYLE SECTION: "An infinite canvas for discovery" */}
+      <section className="space-y-12 max-w-6xl mx-auto px-4">
+        <div className="text-center max-w-3xl mx-auto space-y-3">
+          <span className="apple-eyebrow text-purple-400">Discoveries</span>
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+            An infinite canvas for discovering Uyo.
+          </h2>
+          <p className="text-base sm:text-lg text-slate-400">
+            From verified luxury hotels on Udo Udoma to late-night culinary spots on Nwaniba Road — explore everything in real time.
+          </p>
         </div>
 
-        {/* 3-Column Apple Glass Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredHotels.map((hotel) => {
+        {/* 3-Column Apple Tile Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredHotels.slice(0, 3).map((hotel) => {
             const isSaved = savedIds.includes(hotel.id);
             return (
               <div
                 key={hotel.id}
                 onClick={() => onSelectHotel(hotel)}
-                className="apple-glass-card rounded-[28px] overflow-hidden group cursor-pointer flex flex-col justify-between"
+                className="apple-tile cursor-pointer flex flex-col justify-between border border-white/10 group bg-[#161617]"
               >
-                {/* Image Cover */}
-                <div className="relative h-60 sm:h-64 overflow-hidden">
+                <div className="relative h-64 overflow-hidden">
                   <img
                     src={hotel.image}
                     alt={hotel.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#161617] via-transparent to-transparent" />
 
-                  {/* Top Badges */}
-                  <div className="absolute top-4 inset-x-4 flex items-center justify-between">
-                    <span className="px-3 py-1 rounded-full bg-purple-600 text-white text-[11px] font-bold flex items-center gap-1 shadow-md">
-                      <Star className="w-3 h-3 fill-amber-300 text-amber-300" />
+                  <div className="absolute top-4 inset-x-4 flex justify-between items-center">
+                    <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-[11px] font-bold text-white border border-white/15">
                       {hotel.badge}
                     </span>
-
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         onToggleSave(hotel.id);
                       }}
-                      className="w-9 h-9 rounded-full bg-black/40 backdrop-blur-md text-white flex items-center justify-center hover:bg-black/60 transition-transform active:scale-90"
+                      className="w-9 h-9 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center hover:scale-110 transition-transform"
                     >
                       <Heart className={`w-4 h-4 ${isSaved ? 'fill-rose-500 text-rose-500' : 'text-white'}`} />
                     </button>
                   </div>
-
-                  {/* Bottom Image Stats */}
-                  <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-xs text-white">
-                    <span className="px-2.5 py-1 rounded-lg bg-black/50 backdrop-blur-md font-semibold">
-                      {hotel.rooms.length} Room Types
-                    </span>
-                    <span className="font-bold text-amber-300 flex items-center gap-1">
-                      <Star className="w-3.5 h-3.5 fill-amber-300 text-amber-300" />
-                      {hotel.rating} ({hotel.reviewsCount} reviews)
-                    </span>
-                  </div>
                 </div>
 
-                {/* Card Body */}
                 <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
-                  <div className="space-y-1.5">
+                  <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors">
+                      <h3 className="text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
                         {hotel.name}
                       </h3>
                       {hotel.isVerified && (
-                        <ShieldCheck className="w-4 h-4 text-purple-600 flex-shrink-0" />
+                        <ShieldCheck className="w-4 h-4 text-purple-400" />
                       )}
                     </div>
 
-                    <div className="flex items-center gap-1.5 text-xs text-slate-500">
-                      <MapPin className="w-3.5 h-3.5 text-purple-600 flex-shrink-0" />
+                    <div className="flex items-center gap-2 text-xs text-slate-400">
+                      <Star className="w-3.5 h-3.5 fill-amber-300 text-amber-300" />
+                      <span className="text-white font-semibold">{hotel.rating}</span>
+                      <span>({hotel.reviewsCount} reviews)</span>
+                      <span>•</span>
                       <span className="truncate">{hotel.address}</span>
                     </div>
 
-                    <p className="text-xs text-slate-600 line-clamp-2 pt-2 leading-relaxed font-normal">
+                    <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
                       {hotel.description}
                     </p>
                   </div>
 
-                  {/* Amenities Row */}
-                  <div className="flex flex-wrap gap-1.5 pt-2">
-                    {hotel.amenities.slice(0, 4).map((amenity, idx) => (
-                      <span
-                        key={idx}
-                        className="px-2.5 py-1 rounded-lg bg-slate-100 text-[10px] font-semibold text-slate-700"
-                      >
-                        {amenity}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Price & Action */}
-                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                  <div className="pt-4 border-t border-white/10 flex items-center justify-between">
                     <div>
-                      <span className="text-lg font-black text-slate-900">
+                      <span className="text-lg font-black text-white">
                         ₦{hotel.pricePerNight.toLocaleString()}
                       </span>
-                      <span className="text-xs text-slate-500"> / night</span>
+                      <span className="text-xs text-slate-400"> / night</span>
                     </div>
 
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onSelectHotel(hotel);
-                      }}
-                      className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1"
-                    >
-                      <span>View Rooms</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
+                    <span className="apple-link text-xs">
+                      View Rooms <ChevronRight className="w-3.5 h-3.5" />
+                    </span>
                   </div>
                 </div>
               </div>
@@ -276,58 +184,55 @@ export default function VisionProHome({
         </div>
       </section>
 
-      {/* 4. TOP RESTAURANTS & DINING */}
-      <section className="space-y-6">
-        <div className="flex items-end justify-between border-b border-slate-200 pb-4">
+      {/* 3. APPLE-STYLE SECTION: "Taste of the City" */}
+      <section className="space-y-12 max-w-6xl mx-auto px-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6">
           <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-600 uppercase tracking-widest mb-1">
-              <Flame className="w-3.5 h-3.5" />
-              <span>Taste of Uyo</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-              Top Restaurants & Culinary Spots
+            <span className="apple-eyebrow text-amber-400">Culinary & Dining</span>
+            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight mt-1">
+              Top Restaurants in Uyo.
             </h2>
           </div>
-          <button className="text-xs sm:text-sm font-bold text-purple-600 hover:text-purple-700 flex items-center gap-1">
-            <span>Explore All Dining</span>
+          <button className="apple-link text-sm">
+            <span>Explore all dining</span>
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {VYBE_DATA.restaurants.map((rest) => (
             <div
               key={rest.id}
-              className="apple-glass-card rounded-[28px] overflow-hidden group cursor-pointer"
+              className="apple-tile border border-white/10 group cursor-pointer"
             >
-              <div className="relative h-48 overflow-hidden">
+              <div className="relative h-56 overflow-hidden">
                 <img
                   src={rest.image}
                   alt={rest.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#161617] via-transparent to-transparent" />
                 <div className="absolute bottom-3 left-4 right-4 flex justify-between items-center text-xs text-white">
-                  <span className="font-semibold text-slate-200">{rest.area}</span>
+                  <span className="font-semibold text-slate-300">{rest.area}</span>
                   <span className="font-bold text-amber-300 flex items-center gap-1">
-                    <Star className="w-3 h-3 fill-amber-300 text-amber-300" />
+                    <Star className="w-3.5 h-3.5 fill-amber-300 text-amber-300" />
                     {rest.rating} ({rest.reviewsCount})
                   </span>
                 </div>
               </div>
 
-              <div className="p-5 space-y-3">
-                <h3 className="text-lg font-bold text-slate-900 group-hover:text-purple-600 transition-colors">
+              <div className="p-6 space-y-3">
+                <h3 className="text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
                   {rest.name}
                 </h3>
-                <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
+                <p className="text-xs text-slate-400 leading-relaxed">
                   {rest.description}
                 </p>
-                <div className="flex gap-2 pt-1">
+                <div className="flex gap-2 pt-2">
                   {rest.cuisines.map((c, i) => (
                     <span
                       key={i}
-                      className="px-2.5 py-1 rounded-md bg-purple-50 text-purple-700 text-[10px] font-bold border border-purple-100"
+                      className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-semibold text-slate-300"
                     >
                       {c}
                     </span>
@@ -339,56 +244,52 @@ export default function VisionProHome({
         </div>
       </section>
 
-      {/* 5. UPCOMING EVENTS & CITY EXPERIENCES */}
-      <section className="space-y-6">
-        <div className="flex items-end justify-between border-b border-slate-200 pb-4">
+      {/* 4. APPLE-STYLE SECTION: "Entertainment & Pulse" */}
+      <section className="space-y-12 max-w-6xl mx-auto px-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6">
           <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-rose-600 uppercase tracking-widest mb-1">
-              <Ticket className="w-3.5 h-3.5" />
-              <span>City Pulse</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-              Upcoming Events & Nightlife
+            <span className="apple-eyebrow text-rose-400">Events & Nightlife</span>
+            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight mt-1">
+              What's happening in Uyo.
             </h2>
           </div>
-          <button className="text-xs sm:text-sm font-bold text-purple-600 hover:text-purple-700 flex items-center gap-1">
-            <span>Calendar ({VYBE_DATA.events.length})</span>
+          <button className="apple-link text-sm">
+            <span>View event calendar</span>
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {VYBE_DATA.events.map((evt) => (
             <div
               key={evt.id}
-              className="apple-glass-card rounded-[28px] overflow-hidden group cursor-pointer h-72 relative flex flex-col justify-end p-6"
+              className="apple-tile h-80 relative flex flex-col justify-end p-6 border border-white/10 group cursor-pointer"
             >
               <img
                 src={evt.image}
                 alt={evt.title}
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#161617] via-[#161617]/70 to-transparent" />
 
-              <div className="relative z-10 space-y-2 text-white">
+              <div className="relative z-10 space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="px-3 py-1 rounded-full bg-purple-600 text-white text-[10px] font-extrabold tracking-wider uppercase">
+                  <span className="px-3 py-1 rounded-full bg-purple-600 text-[10px] font-black uppercase tracking-wider text-white">
                     {evt.badge}
                   </span>
-                  <span className="text-xs font-bold text-slate-200">{evt.date} • {evt.time}</span>
+                  <span className="text-xs font-semibold text-slate-300">{evt.date} • {evt.time}</span>
                 </div>
 
                 <h3 className="text-lg font-bold text-white group-hover:text-purple-300 transition-colors">
                   {evt.title}
                 </h3>
+                <p className="text-xs text-slate-400">{evt.location}</p>
 
-                <p className="text-xs text-slate-300 line-clamp-1">{evt.location}</p>
-
-                <div className="pt-2 flex items-center justify-between border-t border-white/20">
+                <div className="pt-3 border-t border-white/10 flex items-center justify-between">
                   <span className="text-sm font-black text-white">
                     ₦{evt.price.toLocaleString()}
                   </span>
-                  <button className="px-3.5 py-1.5 rounded-xl bg-white/20 hover:bg-white/30 text-white text-xs font-semibold backdrop-blur-md">
+                  <button className="apple-btn-primary text-xs py-1.5 px-4">
                     Reserve Pass
                   </button>
                 </div>
@@ -398,26 +299,25 @@ export default function VisionProHome({
         </div>
       </section>
 
-      {/* 6. WHY VYBE VALUE PILLARS */}
-      <section className="bg-white p-8 md:p-12 rounded-[36px] border border-slate-200 shadow-sm space-y-8">
-        <div className="text-center max-w-xl mx-auto space-y-2">
-          <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
-            Why Discover & Book with VYBE?
-          </h3>
-          <p className="text-xs sm:text-sm text-slate-500">
-            A trustworthy, verified standard for local hospitality and leisure in Akwa Ibom.
+      {/* 5. APPLE-STYLE SECTION: "Why VYBE" Spec Pillars */}
+      <section className="rounded-[40px] bg-[#161617] border border-white/10 p-8 sm:p-14 max-w-6xl mx-auto space-y-8">
+        <div className="text-center max-w-2xl mx-auto space-y-2">
+          <span className="apple-eyebrow text-purple-400">Trust & Hospitality</span>
+          <h3 className="text-3xl font-black text-white">Why Discover & Book with VYBE?</h3>
+          <p className="text-sm text-slate-400">
+            A verified platform for local stays, events and local commerce in Akwa Ibom.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {VYBE_DATA.whyBook.map((item, idx) => (
             <div
               key={idx}
-              className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 text-center hover:bg-purple-50/50 transition-colors"
+              className="p-6 rounded-3xl bg-[#1c1c1e] border border-white/5 space-y-2 hover:border-white/20 transition-colors"
             >
-              <CheckCircle2 className="w-7 h-7 text-purple-600 mx-auto mb-2" />
-              <div className="font-bold text-sm text-slate-900">{item.title}</div>
-              <div className="text-xs text-slate-500 mt-1">{item.subtitle}</div>
+              <CheckCircle2 className="w-8 h-8 text-purple-400 mb-2" />
+              <h4 className="font-bold text-base text-white">{item.title}</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">{item.subtitle}</p>
             </div>
           ))}
         </div>

@@ -25,8 +25,8 @@ import { BookingsTab, SavedTab, ProfileTab } from './components/AdditionalTabs';
 import { VYBE_DATA } from './data/vybeData';
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState('main'); // 'main' | 'welcome' | 'auth' | 'detail' | 'booking' | 'confirmation'
-  const [activeTab, setActiveTab] = useState('home'); // home | explore | deals | bookings | saved | profile | admin
+  const [currentScreen, setCurrentScreen] = useState('main');
+  const [activeTab, setActiveTab] = useState('home');
   const [selectedHotel, setSelectedHotel] = useState(VYBE_DATA.hotels[0]);
   const [selectedRoom, setSelectedRoom] = useState(VYBE_DATA.hotels[0].rooms[0]);
   const [lastBooking, setLastBooking] = useState(null);
@@ -63,9 +63,9 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f5f7] text-[#1d1d1f] flex flex-col justify-between selection:bg-purple-600 selection:text-white">
-      {/* 1. TOP SPATIAL NAVIGATION BAR (Apple Clean White Glass) */}
-      <header className="sticky top-0 z-50 px-4 sm:px-8 py-3.5 backdrop-blur-2xl bg-white/80 border-b border-slate-200/80 shadow-xs">
+    <div className="min-h-screen bg-black text-[#f5f5f7] flex flex-col justify-between selection:bg-purple-600 selection:text-white">
+      {/* 1. APPLE SUBNAV STICKY GLASS HEADER */}
+      <header className="sticky top-0 z-50 px-4 sm:px-8 py-3 apple-subnav">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo & City Identity */}
           <div
@@ -76,24 +76,21 @@ export default function App() {
             className="flex items-center gap-3 cursor-pointer"
           >
             <div className="flex items-center gap-1.5">
-              <span className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900 font-display">
+              <span className="text-2xl font-black tracking-tight text-white font-display">
                 VYBE
               </span>
-              <span className="w-2.5 h-2.5 rounded-full bg-purple-600 shadow-[0_0_10px_#9333ea]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-purple-500 shadow-[0_0_12px_#a855f7]" />
             </div>
-            <div className="hidden sm:flex items-center gap-2 pl-3 border-l border-slate-200">
-              <span className="text-xs text-slate-500 font-semibold">Uyo • Akwa Ibom</span>
-              <span className="px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 text-[10px] font-bold border border-purple-200">
-                PRO
-              </span>
+            <div className="hidden sm:flex items-center gap-2 pl-3 border-l border-white/20">
+              <span className="text-xs text-slate-400 font-medium">Uyo • Akwa Ibom</span>
             </div>
           </div>
 
-          {/* Floating Pill Tabs (Complete Suite matching Sections 4, 10 & 21) */}
-          <nav className="hidden lg:flex items-center gap-1 p-1.5 rounded-full bg-slate-100/90 border border-slate-200 shadow-inner">
+          {/* Apple Subnav Style Links */}
+          <nav className="hidden lg:flex items-center gap-6">
             {[
-              { id: 'home', label: 'Discovery' },
-              { id: 'explore', label: 'Living City Map' },
+              { id: 'home', label: 'Overview' },
+              { id: 'explore', label: 'Living Map' },
               { id: 'deals', label: 'Deals & Offers' },
               { id: 'bookings', label: `Bookings (${bookingsList.length})` },
               { id: 'saved', label: `Saved (${savedHotelIds.length})` },
@@ -105,10 +102,10 @@ export default function App() {
                   setCurrentScreen('main');
                   setActiveTab(tab.id);
                 }}
-                className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
+                className={`text-xs font-medium transition-colors ${
                   currentScreen === 'main' && activeTab === tab.id
-                    ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'text-white font-bold'
+                    : 'text-slate-400 hover:text-white'
                 }`}
               >
                 {tab.label}
@@ -116,17 +113,16 @@ export default function App() {
             ))}
           </nav>
 
-          {/* Right User & Location Controls */}
+          {/* Right Action Controls */}
           <div className="flex items-center gap-3">
             <button
               onClick={() => {
                 setCurrentScreen('main');
                 setActiveTab('explore');
               }}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white hover:bg-slate-50 text-xs text-slate-700 border border-slate-200 shadow-xs transition-all"
+              className="apple-btn-primary text-xs py-1.5 px-4 font-semibold"
             >
-              <MapPin className="w-3.5 h-3.5 text-purple-600" />
-              <span className="font-semibold">Uyo</span>
+              Explore Uyo
             </button>
 
             <button
@@ -134,7 +130,7 @@ export default function App() {
                 setCurrentScreen('main');
                 setActiveTab('profile');
               }}
-              className="w-9 h-9 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 text-white font-bold text-xs flex items-center justify-center border border-purple-200 shadow-sm hover:scale-105 transition-transform"
+              className="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 text-white font-bold text-xs flex items-center justify-center border border-white/20 hover:scale-105 transition-transform"
             >
               {user.name[0]}
             </button>
@@ -143,7 +139,7 @@ export default function App() {
       </header>
 
       {/* 2. MAIN WORKSPACE CONTAINER */}
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
+      <main className="flex-1 w-full pt-6">
         {currentScreen === 'welcome' && (
           <WelcomeScreen
             onGetStarted={() => setCurrentScreen('auth')}
@@ -190,21 +186,15 @@ export default function App() {
             )}
 
             {activeTab === 'bookings' && (
-              <div className="max-w-2xl mx-auto">
-                <BookingsTab bookings={bookingsList} onSelectHotel={handleSelectHotel} />
-              </div>
+              <BookingsTab bookings={bookingsList} onSelectHotel={handleSelectHotel} />
             )}
 
             {activeTab === 'saved' && (
-              <div className="max-w-2xl mx-auto">
-                <SavedTab savedIds={savedHotelIds} onSelectHotel={handleSelectHotel} />
-              </div>
+              <SavedTab savedIds={savedHotelIds} onSelectHotel={handleSelectHotel} />
             )}
 
             {activeTab === 'profile' && (
-              <div className="max-w-2xl mx-auto">
-                <ProfileTab user={user} onLogout={() => setCurrentScreen('auth')} />
-              </div>
+              <ProfileTab user={user} onLogout={() => setCurrentScreen('auth')} />
             )}
           </>
         )}
@@ -220,7 +210,7 @@ export default function App() {
         )}
 
         {currentScreen === 'booking' && (
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto px-4">
             <BookingFlowScreen
               hotel={selectedHotel}
               room={selectedRoom}
@@ -231,7 +221,7 @@ export default function App() {
         )}
 
         {currentScreen === 'confirmation' && lastBooking && (
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto px-4">
             <ConfirmationScreen
               booking={lastBooking}
               onBackToHome={() => {
@@ -247,11 +237,11 @@ export default function App() {
         )}
       </main>
 
-      {/* 3. MOBILE BOTTOM DOCK */}
-      <nav className="lg:hidden fixed bottom-0 inset-x-0 bg-white/90 backdrop-blur-2xl border-t border-slate-200 p-2 z-50">
+      {/* 3. MOBILE BOTTOM BAR */}
+      <nav className="lg:hidden fixed bottom-0 inset-x-0 bg-black/80 backdrop-blur-2xl border-t border-white/10 p-2 z-50">
         <div className="flex items-center justify-around">
           {[
-            { id: 'home', label: 'Discovery', icon: Home },
+            { id: 'home', label: 'Overview', icon: Home },
             { id: 'explore', label: 'Map', icon: Compass },
             { id: 'deals', label: 'Deals', icon: Tag },
             { id: 'bookings', label: 'Bookings', icon: CalendarCheck },
@@ -268,7 +258,7 @@ export default function App() {
                   setActiveTab(item.id);
                 }}
                 className={`flex flex-col items-center py-1 px-2.5 rounded-2xl transition-all ${
-                  isActive ? 'text-purple-600 font-bold scale-105' : 'text-slate-400'
+                  isActive ? 'text-purple-400 font-bold scale-105' : 'text-slate-400'
                 }`}
               >
                 <Icon className="w-5 h-5 mb-0.5" />
@@ -279,14 +269,16 @@ export default function App() {
         </div>
       </nav>
 
-      {/* 4. FOOTER: Apple Minimalist Light Footer */}
-      <footer className="border-t border-slate-200 py-10 px-6 mt-16 text-center text-xs text-slate-500 space-y-2">
-        <p className="font-semibold text-slate-700">
-          VYBE • Discover. Book. Experience. — Akwa Ibom State, Nigeria
-        </p>
-        <p className="text-[11px] text-slate-400">
-          Built per Master Product Specification (Pillars 1–10, Sections 1–29) & Apple Spatial Web Standards.
-        </p>
+      {/* 4. FOOTER: Exact Apple Vision Pro Minimalist Global Footer */}
+      <footer className="border-t border-white/15 py-14 px-6 mt-20 text-center text-xs text-slate-500 space-y-3 bg-[#0a0a0c]">
+        <div className="max-w-4xl mx-auto space-y-2">
+          <p className="font-semibold text-slate-300">
+            VYBE • The Spatial Layer for City Discovery & Stays — Uyo, Akwa Ibom State, Nigeria
+          </p>
+          <p className="text-[11px] text-slate-500 leading-relaxed">
+            All trademarks, verified establishments, room inventory, and local experiences adhere to the VYBE Master Product Specification. Designed with Apple Vision Pro product architecture.
+          </p>
+        </div>
       </footer>
     </div>
   );
