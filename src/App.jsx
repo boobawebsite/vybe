@@ -21,7 +21,7 @@ import { BookingsTab, SavedTab, ProfileTab } from './components/AdditionalTabs';
 import { VYBE_DATA } from './data/vybeData';
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState('main'); // default to 'main' for immediate rich preview
+  const [currentScreen, setCurrentScreen] = useState('main'); // default to 'main'
   const [activeTab, setActiveTab] = useState('home'); // home | explore | bookings | saved | profile
   const [selectedHotel, setSelectedHotel] = useState(VYBE_DATA.hotels[0]);
   const [selectedRoom, setSelectedRoom] = useState(VYBE_DATA.hotels[0].rooms[0]);
@@ -59,9 +59,9 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-[#f5f5f7] flex flex-col justify-between selection:bg-purple-600 selection:text-white">
-      {/* 1. TOP SPATIAL NAVIGATION BAR (Apple Vision Pro Glass Style) */}
-      <header className="sticky top-0 z-50 px-4 sm:px-8 py-3.5 backdrop-blur-2xl bg-black/60 border-b border-white/10">
+    <div className="min-h-screen bg-[#f5f5f7] text-[#1d1d1f] flex flex-col justify-between selection:bg-purple-600 selection:text-white">
+      {/* 1. TOP SPATIAL NAVIGATION BAR (Apple Vision Pro Clean White Glass) */}
+      <header className="sticky top-0 z-50 px-4 sm:px-8 py-3.5 backdrop-blur-2xl bg-white/80 border-b border-slate-200/80 shadow-xs">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo & City Identity */}
           <div
@@ -72,21 +72,21 @@ export default function App() {
             className="flex items-center gap-3 cursor-pointer"
           >
             <div className="flex items-center gap-1.5">
-              <span className="text-2xl sm:text-3xl font-black tracking-tight text-white font-display">
+              <span className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900 font-display">
                 VYBE
               </span>
-              <span className="w-2.5 h-2.5 rounded-full bg-purple-500 shadow-[0_0_12px_#a855f7]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-purple-600 shadow-[0_0_10px_#9333ea]" />
             </div>
-            <div className="hidden sm:flex items-center gap-2 pl-3 border-l border-white/15">
-              <span className="text-xs text-slate-400 font-medium">Uyo • Akwa Ibom</span>
-              <span className="px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 text-[10px] font-bold border border-purple-500/30">
+            <div className="hidden sm:flex items-center gap-2 pl-3 border-l border-slate-200">
+              <span className="text-xs text-slate-500 font-semibold">Uyo • Akwa Ibom</span>
+              <span className="px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 text-[10px] font-bold border border-purple-200">
                 PRO
               </span>
             </div>
           </div>
 
-          {/* Floating Pill Tabs (Vision Pro Nav Dock) */}
-          <nav className="hidden md:flex items-center gap-1 p-1.5 rounded-full apple-pill">
+          {/* Floating Pill Tabs (Apple Nav Dock) */}
+          <nav className="hidden md:flex items-center gap-1 p-1.5 rounded-full bg-slate-100/90 border border-slate-200 shadow-inner">
             {[
               { id: 'home', label: 'Discovery' },
               { id: 'explore', label: 'Living City Map' },
@@ -101,8 +101,8 @@ export default function App() {
                 }}
                 className={`px-5 py-2 rounded-full text-xs font-bold transition-all ${
                   currentScreen === 'main' && activeTab === tab.id
-                    ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/30'
-                    : 'text-slate-300 hover:text-white'
+                    ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30'
+                    : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 {tab.label}
@@ -117,10 +117,10 @@ export default function App() {
                 setCurrentScreen('main');
                 setActiveTab('explore');
               }}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/15 text-xs text-slate-200 border border-white/10 transition-all"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white hover:bg-slate-50 text-xs text-slate-700 border border-slate-200 shadow-xs transition-all"
             >
-              <MapPin className="w-3.5 h-3.5 text-purple-400" />
-              <span>Uyo</span>
+              <MapPin className="w-3.5 h-3.5 text-purple-600" />
+              <span className="font-semibold">Uyo</span>
             </button>
 
             <button
@@ -128,7 +128,7 @@ export default function App() {
                 setCurrentScreen('main');
                 setActiveTab('profile');
               }}
-              className="w-9 h-9 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 text-white font-bold text-xs flex items-center justify-center border border-white/20 hover:scale-105 transition-transform"
+              className="w-9 h-9 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 text-white font-bold text-xs flex items-center justify-center border border-purple-200 shadow-sm hover:scale-105 transition-transform"
             >
               {user.name[0]}
             </button>
@@ -234,7 +234,7 @@ export default function App() {
       </main>
 
       {/* 3. MOBILE BOTTOM DOCK (For mobile phones) */}
-      <nav className="md:hidden fixed bottom-0 inset-x-0 bg-black/80 backdrop-blur-2xl border-t border-white/10 p-2 z-50">
+      <nav className="md:hidden fixed bottom-0 inset-x-0 bg-white/90 backdrop-blur-2xl border-t border-slate-200 p-2 z-50">
         <div className="flex items-center justify-around">
           {[
             { id: 'home', label: 'Discovery', icon: Home },
@@ -253,7 +253,7 @@ export default function App() {
                   setActiveTab(item.id);
                 }}
                 className={`flex flex-col items-center py-1 px-3 rounded-2xl transition-all ${
-                  isActive ? 'text-purple-400 font-bold scale-105' : 'text-slate-400'
+                  isActive ? 'text-purple-600 font-bold scale-105' : 'text-slate-400'
                 }`}
               >
                 <Icon className="w-5 h-5 mb-0.5" />
@@ -264,13 +264,13 @@ export default function App() {
         </div>
       </nav>
 
-      {/* 4. FOOTER: Apple Vision Pro Minimalist Spatial Footer */}
-      <footer className="border-t border-white/10 py-10 px-6 mt-16 text-center text-xs text-slate-500 space-y-2">
-        <p className="font-semibold text-slate-400">
+      {/* 4. FOOTER: Apple Minimalist Light Footer */}
+      <footer className="border-t border-slate-200 py-10 px-6 mt-16 text-center text-xs text-slate-500 space-y-2">
+        <p className="font-semibold text-slate-700">
           VYBE • Discover. Book. Experience. — Akwa Ibom State, Nigeria
         </p>
-        <p className="text-[11px] text-slate-600">
-          Designed with Apple Vision Pro Spatial Web Aesthetics & Material Glass UI.
+        <p className="text-[11px] text-slate-400">
+          Designed with Apple Vision Pro Spatial Aesthetics & Clean Light Material UI.
         </p>
       </footer>
     </div>
