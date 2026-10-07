@@ -19,6 +19,8 @@ import AuthScreen from './components/AuthScreen';
 import VisionProHome from './components/VisionProHome';
 import VisionProExplore from './components/VisionProExplore';
 import VisionProDetail from './components/VisionProDetail';
+import MobileHomeScreen from './components/MobileHomeScreen';
+import MobileDetailScreen from './components/MobileDetailScreen';
 import BookingFlowScreen from './components/BookingFlowScreen';
 import ConfirmationScreen from './components/ConfirmationScreen';
 import DealsTab from './components/DealsTab';
@@ -66,108 +68,104 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white text-[#1d1d1f] flex flex-col justify-between selection:bg-purple-600 selection:text-white">
-      {/* 1. APPLE GLOBAL NAV (Top Black/Dark Glass Bar from Screenshot) */}
-      <div className="apple-globalnav text-xs text-[#1d1d1f] px-4 sm:px-8 py-2.5">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-6 overflow-x-auto hide-scrollbar">
-            {/* Apple Logo Replaced with VYBE Brand Mark */}
+      {/* 1. DESKTOP APPLE GLOBAL NAV & SUBNAV (Visible on lg screens only) */}
+      <div className="hidden lg:block">
+        <div className="apple-globalnav text-xs text-[#1d1d1f] px-8 py-2.5">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-6">
+              <div
+                onClick={() => {
+                  setCurrentScreen('main');
+                  setActiveTab('home');
+                }}
+                className="flex items-center gap-1.5 cursor-pointer font-bold text-sm tracking-tight"
+              >
+                <span className="text-base font-black">VYBE</span>
+                <span className="w-2 h-2 rounded-full bg-purple-600" />
+              </div>
+
+              <button onClick={() => { setCurrentScreen('main'); setActiveTab('home'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Stays</button>
+              <button onClick={() => { setCurrentScreen('main'); setActiveTab('explore'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Living Map</button>
+              <button onClick={() => { setCurrentScreen('main'); setActiveTab('deals'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Deals</button>
+              <button onClick={() => { setCurrentScreen('main'); setActiveTab('bookings'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Reservations ({bookingsList.length})</button>
+              <button onClick={() => { setCurrentScreen('main'); setActiveTab('saved'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Saved ({savedHotelIds.length})</button>
+              <button onClick={() => { setCurrentScreen('main'); setActiveTab('admin'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Admin Portal</button>
+            </div>
+
+            <div className="flex items-center gap-4 text-[#1d1d1f]">
+              <button onClick={() => { setCurrentScreen('main'); setActiveTab('explore'); }} className="hover:text-purple-600 transition-colors">
+                <Search className="w-3.5 h-3.5" />
+              </button>
+              <button onClick={() => { setCurrentScreen('main'); setActiveTab('profile'); }} className="hover:text-purple-600 transition-colors">
+                <User className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop Sticky Apple Subnav */}
+        <header className="sticky top-0 z-50 px-8 py-3.5 apple-subnav">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
             <div
               onClick={() => {
                 setCurrentScreen('main');
                 setActiveTab('home');
               }}
-              className="flex items-center gap-1.5 cursor-pointer font-bold text-sm tracking-tight"
+              className="cursor-pointer"
             >
-              <span className="text-base font-black">VYBE</span>
-              <span className="w-2 h-2 rounded-full bg-purple-600" />
+              <h2 className="text-2xl font-bold tracking-tight text-[#1d1d1f]">
+                {selectedHotel.name}
+              </h2>
             </div>
 
-            <button onClick={() => { setCurrentScreen('main'); setActiveTab('home'); }} className="text-[#86868b] hover:text-[#1d1d1f] whitespace-nowrap">Stays</button>
-            <button onClick={() => { setCurrentScreen('main'); setActiveTab('explore'); }} className="text-[#86868b] hover:text-[#1d1d1f] whitespace-nowrap">Living Map</button>
-            <button onClick={() => { setCurrentScreen('main'); setActiveTab('deals'); }} className="text-[#86868b] hover:text-[#1d1d1f] whitespace-nowrap">Deals</button>
-            <button onClick={() => { setCurrentScreen('main'); setActiveTab('bookings'); }} className="text-[#86868b] hover:text-[#1d1d1f] whitespace-nowrap">Reservations ({bookingsList.length})</button>
-            <button onClick={() => { setCurrentScreen('main'); setActiveTab('saved'); }} className="text-[#86868b] hover:text-[#1d1d1f] whitespace-nowrap">Saved ({savedHotelIds.length})</button>
-            <button onClick={() => { setCurrentScreen('main'); setActiveTab('admin'); }} className="text-[#86868b] hover:text-[#1d1d1f] whitespace-nowrap">Admin Portal</button>
-          </div>
+            <div className="flex items-center gap-7">
+              <nav className="flex items-center gap-6 text-xs font-normal text-[#1d1d1f]">
+                <button
+                  onClick={() => {
+                    setCurrentScreen('main');
+                    setActiveTab('home');
+                  }}
+                  className={`transition-colors ${activeTab === 'home' ? 'text-[#1d1d1f] font-semibold border-b-2 border-black pb-0.5' : 'text-[#86868b] hover:text-[#1d1d1f]'}`}
+                >
+                  Overview
+                </button>
+                <button
+                  onClick={() => {
+                    setCurrentScreen('detail');
+                  }}
+                  className={`transition-colors ${currentScreen === 'detail' ? 'text-[#1d1d1f] font-semibold border-b-2 border-black pb-0.5' : 'text-[#86868b] hover:text-[#1d1d1f]'}`}
+                >
+                  Amenities & Rooms
+                </button>
+                <button
+                  onClick={() => {
+                    setCurrentScreen('main');
+                    setActiveTab('explore');
+                  }}
+                  className={`transition-colors ${activeTab === 'explore' ? 'text-[#1d1d1f] font-semibold border-b-2 border-black pb-0.5' : 'text-[#86868b] hover:text-[#1d1d1f]'}`}
+                >
+                  Living Map
+                </button>
+              </nav>
 
-          <div className="flex items-center gap-4 text-[#1d1d1f]">
-            <button onClick={() => { setCurrentScreen('main'); setActiveTab('explore'); }} className="hover:text-purple-600 transition-colors">
-              <Search className="w-3.5 h-3.5" />
-            </button>
-            <button onClick={() => { setCurrentScreen('main'); setActiveTab('profile'); }} className="hover:text-purple-600 transition-colors">
-              <User className="w-3.5 h-3.5" />
-            </button>
+              <div className="flex items-center gap-3">
+                <div className="apple-btn-outline text-xs py-1.5 px-4 cursor-default">
+                  ₦{selectedHotel.pricePerNight.toLocaleString()} / night
+                </div>
+
+                <button
+                  onClick={() => handleSelectHotel(selectedHotel)}
+                  className="apple-btn-blue text-xs py-1.5 px-4 font-medium"
+                >
+                  View
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
+        </header>
       </div>
 
-      {/* 2. APPLE SUBNAV STICKY BAR (Exact header from screenshot: "Apple Vision Pro | Overview Tech Specs visionOS Book a demo Buy") */}
-      <header className="sticky top-0 z-50 px-4 sm:px-8 py-3.5 apple-subnav">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          {/* Exact position of "Apple Vision Pro" title */}
-          <div
-            onClick={() => {
-              setCurrentScreen('main');
-              setActiveTab('home');
-            }}
-            className="cursor-pointer"
-          >
-            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1d1d1f]">
-              {selectedHotel.name}
-            </h2>
-          </div>
-
-          {/* Exact position of "Overview  Tech Specs  visionOS  Book a demo  Buy" */}
-          <div className="flex items-center gap-5 sm:gap-7">
-            <nav className="hidden md:flex items-center gap-6 text-xs font-normal text-[#1d1d1f]">
-              <button
-                onClick={() => {
-                  setCurrentScreen('main');
-                  setActiveTab('home');
-                }}
-                className={`transition-colors ${activeTab === 'home' ? 'text-[#1d1d1f] font-semibold border-b-2 border-black pb-0.5' : 'text-[#86868b] hover:text-[#1d1d1f]'}`}
-              >
-                Overview
-              </button>
-              <button
-                onClick={() => {
-                  setCurrentScreen('detail');
-                }}
-                className={`transition-colors ${currentScreen === 'detail' ? 'text-[#1d1d1f] font-semibold border-b-2 border-black pb-0.5' : 'text-[#86868b] hover:text-[#1d1d1f]'}`}
-              >
-                Amenities & Rooms
-              </button>
-              <button
-                onClick={() => {
-                  setCurrentScreen('main');
-                  setActiveTab('explore');
-                }}
-                className={`transition-colors ${activeTab === 'explore' ? 'text-[#1d1d1f] font-semibold border-b-2 border-black pb-0.5' : 'text-[#86868b] hover:text-[#1d1d1f]'}`}
-              >
-                Living Map
-              </button>
-            </nav>
-
-            {/* Exact position of "Book a demo" (Outline button) and "Buy" (Filled Blue button) */}
-            <div className="flex items-center gap-3">
-              {/* "Book a demo" changed to Price as instructed by user */}
-              <div className="apple-btn-outline text-xs py-1.5 px-4 cursor-default">
-                ₦{selectedHotel.pricePerNight.toLocaleString()} / night
-              </div>
-
-              {/* "Buy" changed to View as instructed by user */}
-              <button
-                onClick={() => handleSelectHotel(selectedHotel)}
-                className="apple-btn-blue text-xs py-1.5 px-4 font-medium"
-              >
-                View
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* 3. MAIN WORKSPACE CONTAINER */}
+      {/* 2. MAIN WORKSPACE CONTAINER (Responsive: Switches naturally between boss's exact mobile design and Apple Vision Pro desktop) */}
       <main className="flex-1 w-full">
         {currentScreen === 'welcome' && (
           <WelcomeScreen
@@ -189,13 +187,29 @@ export default function App() {
         {currentScreen === 'main' && (
           <>
             {activeTab === 'home' && (
-              <VisionProHome
-                user={user}
-                onSelectHotel={handleSelectHotel}
-                onSelectExplore={() => setActiveTab('explore')}
-                savedIds={savedHotelIds}
-                onToggleSave={toggleSaveHotel}
-              />
+              <>
+                {/* On mobile: Boss's exact Figma layout with Uyo header, Featured cards, Restaurants, Events */}
+                <div className="block lg:hidden">
+                  <MobileHomeScreen
+                    user={user}
+                    onSelectHotel={handleSelectHotel}
+                    onSelectExplore={() => setActiveTab('explore')}
+                    savedIds={savedHotelIds}
+                    onToggleSave={toggleSaveHotel}
+                  />
+                </div>
+
+                {/* On desktop: Apple Vision Pro layout matching user's screenshots */}
+                <div className="hidden lg:block">
+                  <VisionProHome
+                    user={user}
+                    onSelectHotel={handleSelectHotel}
+                    onSelectExplore={() => setActiveTab('explore')}
+                    savedIds={savedHotelIds}
+                    onToggleSave={toggleSaveHotel}
+                  />
+                </div>
+              </>
             )}
 
             {activeTab === 'explore' && (
@@ -215,31 +229,53 @@ export default function App() {
             )}
 
             {activeTab === 'bookings' && (
-              <BookingsTab bookings={bookingsList} onSelectHotel={handleSelectHotel} />
+              <div className="max-w-2xl mx-auto px-4">
+                <BookingsTab bookings={bookingsList} onSelectHotel={handleSelectHotel} />
+              </div>
             )}
 
             {activeTab === 'saved' && (
-              <SavedTab savedIds={savedHotelIds} onSelectHotel={handleSelectHotel} />
+              <div className="max-w-2xl mx-auto px-4">
+                <SavedTab savedIds={savedHotelIds} onSelectHotel={handleSelectHotel} />
+              </div>
             )}
 
             {activeTab === 'profile' && (
-              <ProfileTab user={user} onLogout={() => setCurrentScreen('auth')} />
+              <div className="max-w-2xl mx-auto px-4">
+                <ProfileTab user={user} onLogout={() => setCurrentScreen('auth')} />
+              </div>
             )}
           </>
         )}
 
         {currentScreen === 'detail' && (
-          <VisionProDetail
-            hotel={selectedHotel}
-            onBack={() => setCurrentScreen('main')}
-            onProceedToBooking={handleProceedToBooking}
-            isSaved={savedHotelIds.includes(selectedHotel.id)}
-            onToggleSave={toggleSaveHotel}
-          />
+          <>
+            {/* On mobile: Exact Motion Hotel screen from design images 8 & 14 */}
+            <div className="block lg:hidden">
+              <MobileDetailScreen
+                hotel={selectedHotel}
+                onBack={() => setCurrentScreen('main')}
+                onProceedToBooking={handleProceedToBooking}
+                isSaved={savedHotelIds.includes(selectedHotel.id)}
+                onToggleSave={toggleSaveHotel}
+              />
+            </div>
+
+            {/* On desktop: Wide split layout */}
+            <div className="hidden lg:block">
+              <VisionProDetail
+                hotel={selectedHotel}
+                onBack={() => setCurrentScreen('main')}
+                onProceedToBooking={handleProceedToBooking}
+                isSaved={savedHotelIds.includes(selectedHotel.id)}
+                onToggleSave={toggleSaveHotel}
+              />
+            </div>
+          </>
         )}
 
         {currentScreen === 'booking' && (
-          <div className="max-w-2xl mx-auto px-4 py-8">
+          <div className="max-w-2xl mx-auto px-4 py-6">
             <BookingFlowScreen
               hotel={selectedHotel}
               room={selectedRoom}
@@ -250,7 +286,7 @@ export default function App() {
         )}
 
         {currentScreen === 'confirmation' && lastBooking && (
-          <div className="max-w-2xl mx-auto px-4 py-8">
+          <div className="max-w-2xl mx-auto px-4 py-6">
             <ConfirmationScreen
               booking={lastBooking}
               onBackToHome={() => {
@@ -266,16 +302,15 @@ export default function App() {
         )}
       </main>
 
-      {/* 4. MOBILE BOTTOM BAR */}
-      <nav className="lg:hidden fixed bottom-0 inset-x-0 bg-white/90 backdrop-blur-2xl border-t border-slate-200 p-2 z-50">
+      {/* 3. BOSS'S EXACT MOBILE BOTTOM NAVIGATION DOCK (5 tabs from design screenshots: Home, Explore, Bookings, Saved, Profile) */}
+      <nav className="lg:hidden fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-2xl border-t border-slate-200/90 py-2 px-3 z-50">
         <div className="flex items-center justify-around">
           {[
-            { id: 'home', label: 'Overview', icon: Home },
-            { id: 'explore', label: 'Map', icon: Compass },
-            { id: 'deals', label: 'Deals', icon: Tag },
+            { id: 'home', label: 'Home', icon: Home },
+            { id: 'explore', label: 'Explore', icon: Compass },
             { id: 'bookings', label: 'Bookings', icon: CalendarCheck },
             { id: 'saved', label: 'Saved', icon: Heart },
-            { id: 'admin', label: 'Admin', icon: LayoutDashboard },
+            { id: 'profile', label: 'Profile', icon: User },
           ].map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id && currentScreen === 'main';
@@ -286,25 +321,25 @@ export default function App() {
                   setCurrentScreen('main');
                   setActiveTab(item.id);
                 }}
-                className={`flex flex-col items-center py-1 px-2.5 rounded-2xl transition-all ${
+                className={`flex flex-col items-center py-1 px-3 rounded-2xl transition-all ${
                   isActive ? 'text-purple-600 font-bold scale-105' : 'text-slate-400'
                 }`}
               >
-                <Icon className="w-5 h-5 mb-0.5" />
-                <span className="text-[10px]">{item.label}</span>
+                <Icon className={`w-5 h-5 mb-0.5 ${isActive ? 'stroke-[2.5]' : 'stroke-2'}`} />
+                <span className="text-[10px] tracking-tight">{item.label}</span>
               </button>
             );
           })}
         </div>
       </nav>
 
-      {/* 5. FOOTER: Apple Minimalist Light Footer */}
-      <footer className="border-t border-slate-200 py-14 px-6 mt-20 text-center text-xs text-slate-500 space-y-2 bg-[#fbfbfd]">
+      {/* 4. FOOTER (Desktop only) */}
+      <footer className="hidden lg:block border-t border-slate-200 py-14 px-6 mt-20 text-center text-xs text-slate-500 space-y-2 bg-[#fbfbfd]">
         <p className="font-semibold text-slate-800">
           VYBE • The Spatial Layer for City Discovery & Stays — Uyo, Akwa Ibom State, Nigeria
         </p>
         <p className="text-[11px] text-slate-400 leading-relaxed max-w-2xl mx-auto">
-          All trademarks, verified establishments, room inventory, and local experiences adhere to the VYBE Master Product Specification. Designed in exact alignment with the Apple Vision Pro product page structure.
+          All trademarks, verified establishments, room inventory, and local experiences adhere to the VYBE Master Product Specification.
         </p>
       </footer>
     </div>
