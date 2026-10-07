@@ -120,6 +120,14 @@ export const VYBE_DATA = {
           image: "https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=800&q=80",
           features: "Modern urban interior with workspace and high-speed Wi-Fi."
         }
+      ],
+      reviews: [
+        {
+          author: "Kufre E.",
+          time: "2 days ago",
+          rating: 5,
+          comment: "Cozy atmosphere, prompt room service and delicious food."
+        }
       ]
     },
     {
@@ -150,7 +158,8 @@ export const VYBE_DATA = {
           image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80",
           features: "Private kitchenette, ensuite bathroom and quiet neighborhood."
         }
-      ]
+      ],
+      reviews: []
     },
     {
       id: "dcastle-apartments",
@@ -180,7 +189,8 @@ export const VYBE_DATA = {
           image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80",
           features: "Spacious balconies and full kitchen appliances."
         }
-      ]
+      ],
+      reviews: []
     },
     {
       id: "ibom-tropicana",
@@ -210,7 +220,8 @@ export const VYBE_DATA = {
           image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80",
           features: "Overlooking the tropical gardens with spa package included."
         }
-      ]
+      ],
+      reviews: []
     },
     {
       id: "le-meridien",
@@ -240,7 +251,8 @@ export const VYBE_DATA = {
           image: "https://images.unsplash.com/photo-1561501900-3701fa6a0864?auto=format&fit=crop&w=800&q=80",
           features: "Panoramic golf greens view and complimentary breakfast."
         }
-      ]
+      ],
+      reviews: []
     }
   ],
   restaurants: [
@@ -308,6 +320,41 @@ export const VYBE_DATA = {
       badge: "Top Rated",
       image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=800&q=80",
       description: "Sip cocktails under the sun, live poolside acoustics, and VIP cabanas."
+    }
+  ],
+  deals: [
+    {
+      id: "deal-1",
+      business: "Motion Hotel",
+      title: "Midweek Luxury Staycation (20% Off)",
+      originalPrice: 45000,
+      discountedPrice: 36000,
+      code: "MOTION20",
+      badge: "Hot Deal",
+      expires: "Valid till Oct 31",
+      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+      id: "deal-2",
+      business: "The Olive Restaurant",
+      title: "Couples 3-Course Dinner + Wine",
+      originalPrice: 35000,
+      discountedPrice: 28000,
+      code: "OLIVEDINE",
+      badge: "Dining Deal",
+      expires: "Weekends only",
+      image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+      id: "deal-3",
+      business: "Ibom Tropicana",
+      title: "All-Day Pool & Cabana Pass for Two",
+      originalPrice: 20000,
+      discountedPrice: 14000,
+      code: "TROPICVIP",
+      badge: "Leisure Deal",
+      expires: "Limited Slots",
+      image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=600&q=80"
     }
   ],
   whyBook: [

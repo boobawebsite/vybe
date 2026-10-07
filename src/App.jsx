@@ -8,7 +8,9 @@ import {
   ShieldCheck,
   Sparkles,
   MapPin,
-  Bell
+  Bell,
+  Tag,
+  LayoutDashboard
 } from 'lucide-react';
 import WelcomeScreen from './components/WelcomeScreen';
 import AuthScreen from './components/AuthScreen';
@@ -17,12 +19,14 @@ import VisionProExplore from './components/VisionProExplore';
 import VisionProDetail from './components/VisionProDetail';
 import BookingFlowScreen from './components/BookingFlowScreen';
 import ConfirmationScreen from './components/ConfirmationScreen';
+import DealsTab from './components/DealsTab';
+import AdminPortalTab from './components/AdminPortalTab';
 import { BookingsTab, SavedTab, ProfileTab } from './components/AdditionalTabs';
 import { VYBE_DATA } from './data/vybeData';
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState('main'); // default to 'main'
-  const [activeTab, setActiveTab] = useState('home'); // home | explore | bookings | saved | profile
+  const [currentScreen, setCurrentScreen] = useState('main'); // 'main' | 'welcome' | 'auth' | 'detail' | 'booking' | 'confirmation'
+  const [activeTab, setActiveTab] = useState('home'); // home | explore | deals | bookings | saved | profile | admin
   const [selectedHotel, setSelectedHotel] = useState(VYBE_DATA.hotels[0]);
   const [selectedRoom, setSelectedRoom] = useState(VYBE_DATA.hotels[0].rooms[0]);
   const [lastBooking, setLastBooking] = useState(null);
@@ -60,7 +64,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#f5f5f7] text-[#1d1d1f] flex flex-col justify-between selection:bg-purple-600 selection:text-white">
-      {/* 1. TOP SPATIAL NAVIGATION BAR (Apple Vision Pro Clean White Glass) */}
+      {/* 1. TOP SPATIAL NAVIGATION BAR (Apple Clean White Glass) */}
       <header className="sticky top-0 z-50 px-4 sm:px-8 py-3.5 backdrop-blur-2xl bg-white/80 border-b border-slate-200/80 shadow-xs">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo & City Identity */}
@@ -85,13 +89,15 @@ export default function App() {
             </div>
           </div>
 
-          {/* Floating Pill Tabs (Apple Nav Dock) */}
-          <nav className="hidden md:flex items-center gap-1 p-1.5 rounded-full bg-slate-100/90 border border-slate-200 shadow-inner">
+          {/* Floating Pill Tabs (Complete Suite matching Sections 4, 10 & 21) */}
+          <nav className="hidden lg:flex items-center gap-1 p-1.5 rounded-full bg-slate-100/90 border border-slate-200 shadow-inner">
             {[
               { id: 'home', label: 'Discovery' },
               { id: 'explore', label: 'Living City Map' },
+              { id: 'deals', label: 'Deals & Offers' },
               { id: 'bookings', label: `Bookings (${bookingsList.length})` },
               { id: 'saved', label: `Saved (${savedHotelIds.length})` },
+              { id: 'admin', label: 'Admin Portal' },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -99,7 +105,7 @@ export default function App() {
                   setCurrentScreen('main');
                   setActiveTab(tab.id);
                 }}
-                className={`px-5 py-2 rounded-full text-xs font-bold transition-all ${
+                className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
                   currentScreen === 'main' && activeTab === tab.id
                     ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30'
                     : 'text-slate-600 hover:text-slate-900'
@@ -175,6 +181,14 @@ export default function App() {
               />
             )}
 
+            {activeTab === 'deals' && (
+              <DealsTab onSelectHotel={handleSelectHotel} />
+            )}
+
+            {activeTab === 'admin' && (
+              <AdminPortalTab />
+            )}
+
             {activeTab === 'bookings' && (
               <div className="max-w-2xl mx-auto">
                 <BookingsTab bookings={bookingsList} onSelectHotel={handleSelectHotel} />
@@ -233,15 +247,16 @@ export default function App() {
         )}
       </main>
 
-      {/* 3. MOBILE BOTTOM DOCK (For mobile phones) */}
-      <nav className="md:hidden fixed bottom-0 inset-x-0 bg-white/90 backdrop-blur-2xl border-t border-slate-200 p-2 z-50">
+      {/* 3. MOBILE BOTTOM DOCK */}
+      <nav className="lg:hidden fixed bottom-0 inset-x-0 bg-white/90 backdrop-blur-2xl border-t border-slate-200 p-2 z-50">
         <div className="flex items-center justify-around">
           {[
             { id: 'home', label: 'Discovery', icon: Home },
             { id: 'explore', label: 'Map', icon: Compass },
+            { id: 'deals', label: 'Deals', icon: Tag },
             { id: 'bookings', label: 'Bookings', icon: CalendarCheck },
             { id: 'saved', label: 'Saved', icon: Heart },
-            { id: 'profile', label: 'Profile', icon: User },
+            { id: 'admin', label: 'Admin', icon: LayoutDashboard },
           ].map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id && currentScreen === 'main';
@@ -252,7 +267,7 @@ export default function App() {
                   setCurrentScreen('main');
                   setActiveTab(item.id);
                 }}
-                className={`flex flex-col items-center py-1 px-3 rounded-2xl transition-all ${
+                className={`flex flex-col items-center py-1 px-2.5 rounded-2xl transition-all ${
                   isActive ? 'text-purple-600 font-bold scale-105' : 'text-slate-400'
                 }`}
               >
@@ -270,7 +285,7 @@ export default function App() {
           VYBE • Discover. Book. Experience. — Akwa Ibom State, Nigeria
         </p>
         <p className="text-[11px] text-slate-400">
-          Designed with Apple Vision Pro Spatial Aesthetics & Clean Light Material UI.
+          Built per Master Product Specification (Pillars 1–10, Sections 1–29) & Apple Spatial Web Standards.
         </p>
       </footer>
     </div>
