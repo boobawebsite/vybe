@@ -55,13 +55,13 @@ export default function ConfirmationScreen({ booking, onBackToHome, onViewBookin
           <div className="grid grid-cols-2 gap-3 text-xs">
             <div>
               <span className="text-slate-400 block text-[10px] uppercase font-bold">Check-in</span>
-              <span className="font-bold text-slate-800">{booking.stayDates.checkIn}</span>
-              <span className="text-slate-500 block text-[10px]">From 2:00 PM</span>
+              <span className="font-bold text-slate-800">{booking.stayDates?.checkIn || booking.stayDates?.checkInDate || 'Fri, 10 Oct 2025'}</span>
+              <span className="text-slate-500 block text-[10px]">From {booking.stayDates?.checkInTime || '2:00 PM'}</span>
             </div>
             <div>
               <span className="text-slate-400 block text-[10px] uppercase font-bold">Check-out</span>
-              <span className="font-bold text-slate-800">{booking.stayDates.checkOut}</span>
-              <span className="text-slate-500 block text-[10px]">Until 12:00 PM</span>
+              <span className="font-bold text-slate-800">{booking.stayDates?.checkOut || booking.stayDates?.checkOutDate || 'Sat, 11 Oct 2025'}</span>
+              <span className="text-slate-500 block text-[10px]">Until {booking.stayDates?.checkOutTime || '12:00 PM'}</span>
             </div>
           </div>
 
