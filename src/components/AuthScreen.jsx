@@ -189,23 +189,25 @@ export default function AuthScreen({ onLoginSuccess, onBack, initialMode = 'sign
                 </div>
               )}
 
-              {/* Phone with Nigerian Flag Prefix */}
-              <div className="flex rounded-2xl border border-slate-200 bg-white focus-within:border-purple-600 focus-within:ring-1 focus-within:ring-purple-600 transition-all overflow-hidden">
-                <div className="flex items-center gap-1.5 px-3 py-3 bg-slate-50 border-r border-slate-200 text-slate-700 text-xs font-semibold flex-shrink-0">
-                  <Phone className="w-3.5 h-3.5 text-slate-400" />
-                  <span className="text-sm">🇳🇬</span>
-                  <ChevronDown className="w-3 h-3 text-slate-400" />
-                  <span>+234</span>
+              {/* Phone with Nigerian Flag Prefix (Sign up only) */}
+              {!isLogin && (
+                <div className="flex rounded-2xl border border-slate-200 bg-white focus-within:border-purple-600 focus-within:ring-1 focus-within:ring-purple-600 transition-all overflow-hidden">
+                  <div className="flex items-center gap-1.5 px-3 py-3 bg-slate-50 border-r border-slate-200 text-slate-700 text-xs font-semibold flex-shrink-0">
+                    <Phone className="w-3.5 h-3.5 text-slate-400" />
+                    <span className="text-sm">🇳🇬</span>
+                    <ChevronDown className="w-3 h-3 text-slate-400" />
+                    <span>+234</span>
+                  </div>
+                  <input
+                    type="tel"
+                    required
+                    placeholder="Phone Number"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="w-full pl-3 pr-4 py-3 bg-transparent text-xs text-slate-900 placeholder-slate-400 outline-none"
+                  />
                 </div>
-                <input
-                  type="tel"
-                  required
-                  placeholder="Phone Number"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full pl-3 pr-4 py-3 bg-transparent text-xs text-slate-900 placeholder-slate-400 outline-none"
-                />
-              </div>
+              )}
 
               {/* Email Address */}
               <div className="relative">
@@ -430,23 +432,25 @@ export default function AuthScreen({ onLoginSuccess, onBack, initialMode = 'sign
               </div>
             )}
 
-            {/* Phone with Nigerian Flag */}
-            <div className="flex rounded-2xl border border-slate-200 bg-white shadow-2xs overflow-hidden focus-within:border-purple-600">
-              <div className="flex items-center gap-1 px-3 py-3 bg-slate-50 border-r border-slate-200 text-slate-700 text-xs font-semibold flex-shrink-0">
-                <Phone className="w-3.5 h-3.5 text-slate-400" />
-                <span className="text-sm">🇳🇬</span>
-                <ChevronDown className="w-3 h-3 text-slate-400" />
-                <span>+234</span>
+            {/* Phone with Nigerian Flag (Sign up only) */}
+            {!isLogin && (
+              <div className="flex rounded-2xl border border-slate-200 bg-white shadow-2xs overflow-hidden focus-within:border-purple-600">
+                <div className="flex items-center gap-1 px-3 py-3 bg-slate-50 border-r border-slate-200 text-slate-700 text-xs font-semibold flex-shrink-0">
+                  <Phone className="w-3.5 h-3.5 text-slate-400" />
+                  <span className="text-sm">🇳🇬</span>
+                  <ChevronDown className="w-3 h-3 text-slate-400" />
+                  <span>+234</span>
+                </div>
+                <input
+                  type="tel"
+                  required
+                  placeholder="Phone Number"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="w-full pl-3 pr-4 py-3 bg-transparent text-xs text-slate-900 placeholder-slate-400 outline-none"
+                />
               </div>
-              <input
-                type="tel"
-                required
-                placeholder="Phone Number"
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full pl-3 pr-4 py-3 bg-transparent text-xs text-slate-900 placeholder-slate-400 outline-none"
-              />
-            </div>
+            )}
 
             {/* Email Address */}
             <div className="relative">
