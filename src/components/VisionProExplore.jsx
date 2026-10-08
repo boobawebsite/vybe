@@ -317,63 +317,7 @@ export default function VisionProExplore({ onSelectHotel, savedIds = [], onToggl
           </div>
         </div>
 
-        {/* C. TOP-LEFT FLOATING FOCUSED HOTEL DETAIL CARD (EXACT MATCH TO USER SCREENSHOT) */}
-        {activePin && (
-          <div className="absolute top-20 left-6 z-30 bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-3xl p-3.5 shadow-2xl max-w-md w-[370px] flex gap-3.5 items-center transition-all animate-fadeIn">
-            <div className="relative w-24 h-24 rounded-2xl overflow-hidden flex-shrink-0">
-              <img
-                src={activePin.image}
-                alt={activePin.name}
-                className="w-full h-full object-cover"
-              />
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onToggleSave(activePin.id);
-                }}
-                className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:scale-110 transition-transform"
-              >
-                <Heart className={`w-3.5 h-3.5 ${savedIds.includes(activePin.id) ? 'fill-rose-500 text-rose-500' : 'text-white'}`} />
-              </button>
-              <div className="absolute bottom-1.5 left-1.5 px-2 py-0.5 rounded-md bg-purple-600 text-white text-[8px] font-black uppercase tracking-wider">
-                {activePin.badge}
-              </div>
-            </div>
 
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-1.5 text-xs text-amber-500 font-bold">
-                <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                <span>{activePin.rating}</span>
-                <span className="text-slate-400 font-normal">({activePin.reviewsCount})</span>
-              </div>
-
-              <h4 className="font-extrabold text-sm text-slate-900 truncate mt-0.5">
-                {activePin.name}
-              </h4>
-
-              <p className="text-[11px] text-slate-500 truncate flex items-center gap-1 mt-0.5">
-                <MapPin className="w-3 h-3 text-purple-600 flex-shrink-0" />
-                <span>{activePin.address}</span>
-              </p>
-
-              <div className="flex items-center justify-between pt-2 mt-2 border-t border-slate-100">
-                <div>
-                  <span className="text-sm font-black text-slate-900">
-                    ₦{activePin.pricePerNight.toLocaleString()}
-                  </span>
-                  <span className="text-[10px] text-slate-400 font-normal"> / night</span>
-                </div>
-
-                <button
-                  onClick={() => onSelectHotel(activePin)}
-                  className="px-4 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold shadow-xs active:scale-95 transition-all"
-                >
-                  View
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* D. BOTTOM-RIGHT FLOATING MAP CONTROLS (ZOOM & RECENTER) */}
         <div className="absolute bottom-40 right-6 z-40 flex flex-col items-center gap-2.5">

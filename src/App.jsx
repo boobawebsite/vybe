@@ -187,8 +187,8 @@ export default function App() {
           </div>
         </div>
 
-        {/* Desktop Sticky Apple Subnav (Visible on main discovery & detail screens) */}
-        {currentScreen !== 'booking' && currentScreen !== 'confirmation' && (
+        {/* Desktop Sticky Apple Subnav (Visible on main discovery & detail screens, hidden on full-screen Living Map) */}
+        {currentScreen !== 'booking' && currentScreen !== 'confirmation' && activeTab !== 'explore' && (
           <header className="sticky top-0 z-50 px-8 py-3.5 apple-subnav">
             <div className="max-w-7xl mx-auto flex items-center justify-between">
               <div
