@@ -88,7 +88,7 @@ export default function VisionProHome({
                     <polyline points="3.5 8 6.5 11 12.5 5" />
                   </svg>
                 </span>
-                <span>Verified Stay</span>
+                <span>Verified</span>
               </span>
             </div>
           )}
