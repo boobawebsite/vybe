@@ -39,6 +39,23 @@ export default function VisionProHome({
   const heroHotel = VYBE_DATA.hotels[0]; // Motion Hotel
 
   const otherHotels = VYBE_DATA.hotels.slice(1);
+  const displayedHotels = otherHotels.filter((hotel) => {
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase();
+    return (
+      hotel.name.toLowerCase().includes(q) ||
+      hotel.address.toLowerCase().includes(q) ||
+      hotel.description?.toLowerCase().includes(q)
+    );
+  });
+
+  const handleSearch = (e) => {
+    if (e) e.preventDefault();
+    const el = document.getElementById('hotels-section');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   React.useEffect(() => {
     if (activeCategory) {
@@ -122,7 +139,10 @@ export default function VisionProHome({
 
         {/* Bottom Floating Search Dock */}
         <div className="relative z-10 max-w-4xl mx-auto w-full px-4 pt-4">
-          <div className="bg-white/95 backdrop-blur-2xl p-2.5 rounded-full border border-slate-200/90 shadow-xl flex items-center justify-between gap-3">
+          <form
+            onSubmit={handleSearch}
+            className="bg-white/95 backdrop-blur-2xl p-2.5 rounded-full border border-slate-200/90 shadow-xl flex items-center justify-between gap-3"
+          >
             <div className="flex items-center gap-3 w-full px-4">
               <Search className="w-5 h-5 text-purple-600 flex-shrink-0" />
               <input
@@ -135,13 +155,13 @@ export default function VisionProHome({
             </div>
 
             <button
-              onClick={onSelectExplore}
+              type="submit"
               className="apple-btn-blue text-xs sm:text-sm py-2 px-5 flex items-center gap-1.5 whitespace-nowrap"
             >
-              <Compass className="w-4 h-4" />
-              <span>VYBE Map</span>
+              <Search className="w-4 h-4" />
+              <span>Search</span>
             </button>
-          </div>
+          </form>
         </div>
       </section>
 
@@ -159,7 +179,7 @@ export default function VisionProHome({
 
         {/* 3-Column Apple Tile Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {otherHotels.map((hotel) => {
+          {displayedHotels.map((hotel) => {
             const isSaved = savedIds?.includes(hotel.id);
             return (
               <div
@@ -246,6 +266,14 @@ export default function VisionProHome({
               </div>
             );
           })}
+
+          {displayedHotels.length === 0 && (
+            <div className="col-span-full text-center py-16 bg-[#fbfbfd] rounded-3xl border border-slate-200">
+              <Search className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+              <p className="text-lg font-bold text-[#1d1d1f]">No stays found</p>
+              <p className="text-sm text-[#86868b] mt-1">We couldn't find any stays matching "{searchQuery}"</p>
+            </div>
+          )}
         </div>
       </section>
 
