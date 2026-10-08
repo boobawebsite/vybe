@@ -19,7 +19,8 @@ import {
   ShieldCheck,
   Calendar,
   Users,
-  Compass
+  Compass,
+  User
 } from 'lucide-react';
 import { VYBE_DATA } from '../data/vybeData';
 
