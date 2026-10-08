@@ -31,7 +31,7 @@ import { BookingsTab, SavedTab, ProfileTab } from './components/AdditionalTabs';
 import { VYBE_DATA } from './data/vybeData';
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState('main');
+  const [currentScreen, setCurrentScreen] = useState('welcome');
   const [activeTab, setActiveTab] = useState('home');
   const [selectedHotel, setSelectedHotel] = useState(VYBE_DATA.hotels[0]);
   const [selectedRoom, setSelectedRoom] = useState(VYBE_DATA.hotels[0].rooms[0]);
@@ -75,30 +75,32 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white text-[#1d1d1f] flex flex-col justify-between selection:bg-purple-600 selection:text-white">
-      {/* 1. DESKTOP APPLE GLOBAL NAV & SUBNAV (Visible on lg screens only) */}
-      <div className="hidden lg:block">
-        <div className="apple-globalnav text-xs text-[#1d1d1f] px-8 py-2.5">
-          <div className="max-w-7xl mx-auto flex items-center justify-between">
-            <div className="flex items-center gap-6">
-              <div
-                onClick={() => {
-                  setCurrentScreen('main');
-                  setActiveTab('home');
-                }}
-                className="flex items-center gap-1.5 cursor-pointer font-bold text-sm tracking-tight"
-              >
-                <span className="text-base font-black">VYBE</span>
-                <span className="w-2 h-2 rounded-full bg-purple-600" />
-              </div>
+      {/* 1. DESKTOP APPLE GLOBAL NAV & SUBNAV (Visible on lg screens only when not on welcome screen) */}
+      {currentScreen !== 'welcome' && (
+        <div className="hidden lg:block">
+          <div className="apple-globalnav text-xs text-[#1d1d1f] px-8 py-2.5">
+            <div className="max-w-7xl mx-auto flex items-center justify-between">
+              <div className="flex items-center gap-6">
+                <div
+                  onClick={() => {
+                    setCurrentScreen('main');
+                    setActiveTab('home');
+                  }}
+                  className="flex items-center gap-1.5 cursor-pointer font-bold text-sm tracking-tight"
+                >
+                  <span className="text-base font-black">VYBE</span>
+                  <span className="w-2 h-2 rounded-full bg-purple-600" />
+                </div>
 
-              <button onClick={() => { setCurrentScreen('main'); setActiveTab('home'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Stays</button>
-              <button onClick={() => { setCurrentScreen('main'); setActiveTab('explore'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Living Map</button>
-              <button onClick={() => { setCurrentScreen('main'); setActiveTab('deals'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Deals</button>
-              <button onClick={() => { setCurrentScreen('booking'); }} className="text-purple-600 font-bold hover:text-purple-700 bg-purple-50 px-2.5 py-1 rounded-full border border-purple-200">Stay Details (Checkout)</button>
-              <button onClick={() => { setCurrentScreen('main'); setActiveTab('bookings'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Reservations ({bookingsList.length})</button>
-              <button onClick={() => { setCurrentScreen('main'); setActiveTab('saved'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Saved ({savedHotelIds.length})</button>
-              <button onClick={() => { setCurrentScreen('main'); setActiveTab('admin'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Admin Portal</button>
-            </div>
+                <button onClick={() => setCurrentScreen('welcome')} className="text-purple-600 font-bold hover:text-purple-700 bg-purple-50 px-2.5 py-1 rounded-full border border-purple-200">First Page (Welcome)</button>
+                <button onClick={() => { setCurrentScreen('main'); setActiveTab('home'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Stays</button>
+                <button onClick={() => { setCurrentScreen('main'); setActiveTab('explore'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Living Map</button>
+                <button onClick={() => { setCurrentScreen('main'); setActiveTab('deals'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Deals</button>
+                <button onClick={() => { setCurrentScreen('booking'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Stay Details (Checkout)</button>
+                <button onClick={() => { setCurrentScreen('main'); setActiveTab('bookings'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Reservations ({bookingsList.length})</button>
+                <button onClick={() => { setCurrentScreen('main'); setActiveTab('saved'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Saved ({savedHotelIds.length})</button>
+                <button onClick={() => { setCurrentScreen('main'); setActiveTab('admin'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Admin Portal</button>
+              </div>
 
             <div className="flex items-center gap-4 text-[#1d1d1f]">
               <button onClick={() => { setCurrentScreen('main'); setActiveTab('explore'); }} className="hover:text-purple-600 transition-colors">
@@ -174,13 +176,18 @@ export default function App() {
           </header>
         )}
       </div>
+      )}
 
       {/* 2. MAIN WORKSPACE CONTAINER (Responsive: Switches naturally between boss's exact mobile design and Apple Vision Pro desktop) */}
       <main className="flex-1 w-full">
         {currentScreen === 'welcome' && (
           <WelcomeScreen
-            onGetStarted={() => setCurrentScreen('auth')}
+            onGetStarted={() => setCurrentScreen('main')}
             onSignIn={() => setCurrentScreen('auth')}
+            onSelectCategory={(catId) => {
+              setCurrentScreen('main');
+              setActiveTab(catId === 'shops' ? 'explore' : 'home');
+            }}
           />
         )}
 
@@ -209,6 +216,7 @@ export default function App() {
                       setSelectedRoom(VYBE_DATA.hotels[0].rooms[0]);
                       setCurrentScreen('booking');
                     }}
+                    onGoToWelcome={() => setCurrentScreen('welcome')}
                     savedIds={savedHotelIds}
                     onToggleSave={toggleSaveHotel}
                   />
@@ -331,45 +339,49 @@ export default function App() {
       </main>
 
       {/* 3. BOSS'S EXACT MOBILE BOTTOM NAVIGATION DOCK (5 tabs from design screenshots: Home, Explore, Bookings, Saved, Profile) */}
-      <nav className="lg:hidden fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-2xl border-t border-slate-200/90 py-2 px-3 z-50">
-        <div className="flex items-center justify-around">
-          {[
-            { id: 'home', label: 'Home', icon: Home },
-            { id: 'explore', label: 'Explore', icon: Compass },
-            { id: 'bookings', label: 'Bookings', icon: CalendarCheck },
-            { id: 'saved', label: 'Saved', icon: Heart },
-            { id: 'profile', label: 'Profile', icon: User },
-          ].map((item) => {
-            const Icon = item.icon;
-            const isActive = activeTab === item.id && currentScreen === 'main';
-            return (
-              <button
-                key={item.id}
-                onClick={() => {
-                  setCurrentScreen('main');
-                  setActiveTab(item.id);
-                }}
-                className={`flex flex-col items-center py-1 px-3 rounded-2xl transition-all ${
-                  isActive ? 'text-purple-600 font-bold scale-105' : 'text-slate-400'
-                }`}
-              >
-                <Icon className={`w-5 h-5 mb-0.5 ${isActive ? 'stroke-[2.5]' : 'stroke-2'}`} />
-                <span className="text-[10px] tracking-tight">{item.label}</span>
-              </button>
-            );
-          })}
-        </div>
-      </nav>
+      {currentScreen !== 'welcome' && (
+        <nav className="lg:hidden fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-2xl border-t border-slate-200/90 py-2 px-3 z-50">
+          <div className="flex items-center justify-around">
+            {[
+              { id: 'home', label: 'Home', icon: Home },
+              { id: 'explore', label: 'Explore', icon: Compass },
+              { id: 'bookings', label: 'Bookings', icon: CalendarCheck },
+              { id: 'saved', label: 'Saved', icon: Heart },
+              { id: 'profile', label: 'Profile', icon: User },
+            ].map((item) => {
+              const Icon = item.icon;
+              const isActive = activeTab === item.id && currentScreen === 'main';
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    setCurrentScreen('main');
+                    setActiveTab(item.id);
+                  }}
+                  className={`flex flex-col items-center py-1 px-3 rounded-2xl transition-all ${
+                    isActive ? 'text-purple-600 font-bold scale-105' : 'text-slate-400'
+                  }`}
+                >
+                  <Icon className={`w-5 h-5 mb-0.5 ${isActive ? 'stroke-[2.5]' : 'stroke-2'}`} />
+                  <span className="text-[10px] tracking-tight">{item.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </nav>
+      )}
 
       {/* 4. FOOTER (Desktop only) */}
-      <footer className="hidden lg:block border-t border-slate-200 py-14 px-6 mt-20 text-center text-xs text-slate-500 space-y-2 bg-[#fbfbfd]">
-        <p className="font-semibold text-slate-800">
-          VYBE • The Spatial Layer for City Discovery & Stays — Uyo, Akwa Ibom State, Nigeria
-        </p>
-        <p className="text-[11px] text-slate-400 leading-relaxed max-w-2xl mx-auto">
-          All trademarks, verified establishments, room inventory, and local experiences adhere to the VYBE Master Product Specification.
-        </p>
-      </footer>
+      {currentScreen !== 'welcome' && (
+        <footer className="hidden lg:block border-t border-slate-200 py-14 px-6 mt-20 text-center text-xs text-slate-500 space-y-2 bg-[#fbfbfd]">
+          <p className="font-semibold text-slate-800">
+            VYBE • The Spatial Layer for City Discovery & Stays — Uyo, Akwa Ibom State, Nigeria
+          </p>
+          <p className="text-[11px] text-slate-400 leading-relaxed max-w-2xl mx-auto">
+            All trademarks, verified establishments, room inventory, and local experiences adhere to the VYBE Master Product Specification.
+          </p>
+        </footer>
+      )}
     </div>
   );
 }

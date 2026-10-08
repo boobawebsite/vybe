@@ -28,6 +28,7 @@ export default function MobileHomeScreen({
   onSelectHotel,
   onSelectExplore,
   onOpenStayDetails,
+  onGoToWelcome,
   savedIds,
   onToggleSave
 }) {
@@ -52,7 +53,10 @@ export default function MobileHomeScreen({
     <div className="space-y-5 pb-28 text-slate-900 px-4 pt-2">
       {/* 1. TOP HEADER (Exact Brand Header from Boss's Figma) */}
       <div className="flex items-center justify-between">
-        <div>
+        <div
+          onClick={onGoToWelcome}
+          className="cursor-pointer active:scale-95 transition-transform"
+        >
           <div className="flex items-center gap-1.5">
             <span className="text-2xl font-black tracking-tight text-slate-900 font-display">
               VYBE
