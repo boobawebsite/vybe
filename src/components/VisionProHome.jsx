@@ -72,27 +72,30 @@ export default function VisionProHome({
 
         {/* Center-Left Content: Exact location of "Vision Pro" and "New powerful M5 chip..." */}
         <div className="relative z-10 max-w-2xl px-4 sm:px-8 py-8 space-y-4">
-          {/* Hotel Name with Apple-Grade Purple Verified Badge */}
-          <h1 className="text-5xl sm:text-7xl font-extrabold text-[#1d1d1f] tracking-tight leading-[1.05] font-display flex items-center flex-wrap">
-            <span>{heroHotel.name}</span>
-            <span
-              className="inline-flex items-center ml-3 sm:ml-4 self-center align-middle"
-              title="Verified VYBE Partner"
-            >
-              <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center shadow-xs ring-2 ring-white/90">
-                <svg
-                  className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5 text-white"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polyline points="3.75 8.25 6.5 11 12.25 5.25" />
-                </svg>
+          {heroHotel.isVerified && (
+            <div>
+              <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-purple-50/90 backdrop-blur-md border border-purple-200/90 text-purple-900 text-xs font-semibold tracking-wide shadow-xs">
+                <span className="w-4 h-4 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center shadow-xs">
+                  <svg
+                    className="w-2.5 h-2.5 text-white"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polyline points="3.5 8 6.5 11 12.5 5" />
+                  </svg>
+                </span>
+                <span>Verified Stay</span>
               </span>
-            </span>
+            </div>
+          )}
+
+          {/* Hotel Name taking the exact position and styling of "Vision Pro" */}
+          <h1 className="text-5xl sm:text-7xl font-extrabold text-[#1d1d1f] tracking-tight leading-[1.05] font-display">
+            {heroHotel.name}
           </h1>
 
           {/* Hotel Location taking the exact position of "New powerful M5 chip and comfortable Dual Knit Band." */}
@@ -190,12 +193,27 @@ export default function VisionProHome({
 
                 <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
                   <div className="space-y-2">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-start justify-between gap-2">
                       <h3 className="text-xl font-bold text-[#1d1d1f] group-hover:text-purple-600 transition-colors">
                         {hotel.name}
                       </h3>
                       {hotel.isVerified && (
-                        <ShieldCheck className="w-4 h-4 text-purple-600" />
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-purple-50 border border-purple-200/80 text-purple-700 text-xs font-semibold flex-shrink-0">
+                          <span className="w-3.5 h-3.5 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center">
+                            <svg
+                              className="w-2 h-2 text-white"
+                              viewBox="0 0 16 16"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <polyline points="3.5 8 6.5 11 12.5 5" />
+                            </svg>
+                          </span>
+                          <span>Verified</span>
+                        </span>
                       )}
                     </div>
 
