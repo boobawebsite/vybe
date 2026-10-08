@@ -280,8 +280,7 @@ export default function VisionProHome({
       <section id="restaurants-section" className="space-y-12 max-w-7xl mx-auto px-4 sm:px-8 scroll-mt-24">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-6">
           <div>
-            <span className="apple-eyebrow text-amber-600">Culinary & Dining</span>
-            <h2 className="text-3xl sm:text-4xl font-black text-[#1d1d1f] tracking-tight mt-1">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#1d1d1f] tracking-tight">
               Top Restaurants in Uyo.
             </h2>
           </div>
