@@ -319,16 +319,6 @@ export default function VisionProHome({
                 <p className="text-xs text-slate-600 leading-relaxed">
                   {rest.description}
                 </p>
-                <div className="flex gap-2 pt-2">
-                  {rest.cuisines.map((c, i) => (
-                    <span
-                      key={i}
-                      className="px-3 py-1 rounded-full bg-purple-50 border border-purple-200 text-[10px] font-semibold text-purple-700"
-                    >
-                      {c}
-                    </span>
-                  ))}
-                </div>
               </div>
             </div>
           ))}
@@ -382,11 +372,6 @@ export default function VisionProHome({
                 <p className="text-xs text-slate-600 leading-relaxed">
                   {venue.description}
                 </p>
-                <div className="pt-2">
-                  <span className="px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-[10px] font-semibold text-indigo-700">
-                    {venue.vibe}
-                  </span>
-                </div>
               </div>
             </div>
           ))}
