@@ -42,8 +42,21 @@ export default function App() {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
   const [user, setUser] = useState({ name: 'Daniel', email: 'daniel@vybe.ng', accountType: 'personal' });
+  const [activeCategory, setActiveCategory] = useState('hotels');
   const [savedHotelIds, setSavedHotelIds] = useState(['motion-hotel', 'ibom-tropicana']);
   const [bookingsList, setBookingsList] = useState([]);
+
+  const handleNavCategory = (categoryId) => {
+    setCurrentScreen('main');
+    setActiveTab('home');
+    setActiveCategory(categoryId);
+    setTimeout(() => {
+      const el = document.getElementById(`${categoryId}-section`) || document.getElementById(categoryId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 60);
+  };
 
   const toggleSaveHotel = (hotelId) => {
     setSavedHotelIds((prev) =>
@@ -107,54 +120,105 @@ export default function App() {
               </div>
 
               {/* Primary Navigation Tabs */}
-              <nav className="flex items-center gap-2">
+              <nav className="flex items-center gap-1 sm:gap-1.5">
                 <button
-                  onClick={() => { setCurrentScreen('main'); setActiveTab('explore'); }}
-                  className={`font-semibold px-4 py-2 rounded-full text-xs transition-all ${
+                  onClick={() => handleNavCategory('hotels')}
+                  className={`font-semibold px-3.5 py-1.5 rounded-full text-xs transition-all ${
+                    currentScreen === 'main' && activeTab === 'home' && activeCategory === 'hotels'
+                      ? 'bg-purple-600 text-white shadow-xs'
+                      : 'text-[#86868b] hover:text-[#1d1d1f] hover:bg-slate-100'
+                  }`}
+                >
+                  Hotels
+                </button>
+
+                <button
+                  onClick={() => handleNavCategory('restaurants')}
+                  className={`font-semibold px-3.5 py-1.5 rounded-full text-xs transition-all ${
+                    currentScreen === 'main' && activeTab === 'home' && activeCategory === 'restaurants'
+                      ? 'bg-purple-600 text-white shadow-xs'
+                      : 'text-[#86868b] hover:text-[#1d1d1f] hover:bg-slate-100'
+                  }`}
+                >
+                  Restaurants
+                </button>
+
+                <button
+                  onClick={() => handleNavCategory('nightlife')}
+                  className={`font-semibold px-3.5 py-1.5 rounded-full text-xs transition-all ${
+                    currentScreen === 'main' && activeTab === 'home' && activeCategory === 'nightlife'
+                      ? 'bg-purple-600 text-white shadow-xs'
+                      : 'text-[#86868b] hover:text-[#1d1d1f] hover:bg-slate-100'
+                  }`}
+                >
+                  Nightlife
+                </button>
+
+                <button
+                  onClick={() => handleNavCategory('events')}
+                  className={`font-semibold px-3.5 py-1.5 rounded-full text-xs transition-all ${
+                    currentScreen === 'main' && activeTab === 'home' && activeCategory === 'events'
+                      ? 'bg-purple-600 text-white shadow-xs'
+                      : 'text-[#86868b] hover:text-[#1d1d1f] hover:bg-slate-100'
+                  }`}
+                >
+                  Events
+                </button>
+
+                <button
+                  onClick={() => handleNavCategory('resorts')}
+                  className={`font-semibold px-3.5 py-1.5 rounded-full text-xs transition-all ${
+                    currentScreen === 'main' && activeTab === 'home' && activeCategory === 'resorts'
+                      ? 'bg-purple-600 text-white shadow-xs'
+                      : 'text-[#86868b] hover:text-[#1d1d1f] hover:bg-slate-100'
+                  }`}
+                >
+                  Resorts
+                </button>
+
+                <div className="h-4 w-px bg-slate-200 mx-1" />
+
+                <button
+                  onClick={() => {
+                    setCurrentScreen('main');
+                    setActiveTab('explore');
+                    setActiveCategory('map');
+                  }}
+                  className={`font-semibold px-3.5 py-1.5 rounded-full text-xs transition-all flex items-center gap-1.5 ${
                     currentScreen === 'main' && activeTab === 'explore'
                       ? 'bg-purple-600 text-white shadow-xs'
-                      : 'text-[#86868b] hover:text-[#1d1d1f] hover:bg-slate-100'
+                      : 'text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200/80'
                   }`}
                 >
-                  Living Map
-                </button>
-
-                <button
-                  onClick={() => { setCurrentScreen('main'); setActiveTab('home'); }}
-                  className={`font-semibold px-4 py-2 rounded-full text-xs transition-all ${
-                    currentScreen === 'main' && activeTab === 'home'
-                      ? 'bg-purple-600 text-white shadow-xs'
-                      : 'text-[#86868b] hover:text-[#1d1d1f] hover:bg-slate-100'
-                  }`}
-                >
-                  Stays & Suites
-                </button>
-
-                <button
-                  onClick={() => { setCurrentScreen('main'); setActiveTab('deals'); }}
-                  className={`font-semibold px-4 py-2 rounded-full text-xs transition-all ${
-                    currentScreen === 'main' && activeTab === 'deals'
-                      ? 'bg-purple-600 text-white shadow-xs'
-                      : 'text-[#86868b] hover:text-[#1d1d1f] hover:bg-slate-100'
-                  }`}
-                >
-                  Deals & Passes
-                </button>
-
-                <button
-                  onClick={() => { setCurrentScreen('main'); setActiveTab('admin'); }}
-                  className={`font-semibold px-4 py-2 rounded-full text-xs transition-all ${
-                    currentScreen === 'main' && activeTab === 'admin'
-                      ? 'bg-purple-600 text-white shadow-xs'
-                      : 'text-[#86868b] hover:text-[#1d1d1f] hover:bg-slate-100'
-                  }`}
-                >
-                  Host Portal
+                  <Compass className="w-3.5 h-3.5" />
+                  <span>Living Map</span>
                 </button>
               </nav>
 
               {/* Right Side Utility Controls */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2.5">
+                <button
+                  onClick={() => { setCurrentScreen('main'); setActiveTab('deals'); setActiveCategory('deals'); }}
+                  className={`hidden xl:inline-flex items-center gap-1 font-semibold px-3 py-1.5 rounded-full text-xs transition-all ${
+                    currentScreen === 'main' && activeTab === 'deals'
+                      ? 'bg-purple-600 text-white shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                  }`}
+                >
+                  <Tag className="w-3.5 h-3.5 text-purple-600" />
+                  <span>Deals</span>
+                </button>
+
+                <button
+                  onClick={() => { setCurrentScreen('main'); setActiveTab('admin'); setActiveCategory('admin'); }}
+                  className={`hidden xl:inline-flex items-center gap-1 font-semibold px-3 py-1.5 rounded-full text-xs transition-all ${
+                    currentScreen === 'main' && activeTab === 'admin'
+                      ? 'bg-purple-600 text-white shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                  }`}
+                >
+                  <span>Host Portal</span>
+                </button>
                 {/* Wishlist / Saved Button with Count */}
                 <button
                   onClick={() => { setCurrentScreen('main'); setActiveTab('saved'); }}
@@ -262,6 +326,32 @@ export default function App() {
 
                         <button
                           onClick={() => {
+                            setCurrentScreen('main');
+                            setActiveTab('deals');
+                            setActiveCategory('deals');
+                            setIsProfileMenuOpen(false);
+                          }}
+                          className="w-full px-4 py-2 text-left hover:bg-slate-50 flex items-center gap-2.5 text-slate-700 font-medium"
+                        >
+                          <Tag className="w-3.5 h-3.5 text-purple-600" />
+                          <span>Special Deals & Passes</span>
+                        </button>
+
+                        <button
+                          onClick={() => {
+                            setCurrentScreen('main');
+                            setActiveTab('admin');
+                            setActiveCategory('admin');
+                            setIsProfileMenuOpen(false);
+                          }}
+                          className="w-full px-4 py-2 text-left hover:bg-slate-50 flex items-center gap-2.5 text-slate-700 font-medium"
+                        >
+                          <ShieldCheck className="w-3.5 h-3.5 text-indigo-600" />
+                          <span>Host / Partner Dashboard</span>
+                        </button>
+
+                        <button
+                          onClick={() => {
                             setCurrentScreen('welcome');
                             setIsProfileMenuOpen(false);
                           }}
@@ -309,6 +399,7 @@ export default function App() {
               setUser(userData);
               setCurrentScreen('main');
               setActiveTab('home');
+              setActiveCategory('hotels');
             }}
             onBack={() => setCurrentScreen('welcome')}
           />
@@ -323,7 +414,10 @@ export default function App() {
                   <MobileHomeScreen
                     user={user}
                     onSelectHotel={handleSelectHotel}
-                    onSelectExplore={() => setActiveTab('explore')}
+                    onSelectExplore={() => {
+                      setActiveTab('explore');
+                      setActiveCategory('map');
+                    }}
                     onOpenStayDetails={() => {
                       setSelectedHotel(VYBE_DATA.hotels[0]);
                       setSelectedRoom(VYBE_DATA.hotels[0].rooms[0]);
@@ -341,9 +435,14 @@ export default function App() {
                   <VisionProHome
                     user={user}
                     onSelectHotel={handleSelectHotel}
-                    onSelectExplore={() => setActiveTab('explore')}
+                    onSelectExplore={() => {
+                      setActiveTab('explore');
+                      setActiveCategory('map');
+                    }}
                     savedIds={savedHotelIds}
                     onToggleSave={toggleSaveHotel}
+                    activeCategory={activeCategory}
+                    onSelectCategory={handleNavCategory}
                   />
                 </div>
               </>

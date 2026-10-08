@@ -322,6 +322,73 @@ export const VYBE_DATA = {
       description: "Sip cocktails under the sun, live poolside acoustics, and VIP cabanas."
     }
   ],
+  nightlife: [
+    {
+      id: "the-vibe-lounge",
+      name: "The Vibe Lounge & Club",
+      rating: 4.8,
+      reviewsCount: 215,
+      area: "Udo Udoma Ave, Uyo",
+      vibe: "High Energy & DJ Sets",
+      image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80",
+      description: "Premier nightlife destination in Uyo featuring craft cocktails, VIP booths, and world-class sound acoustics."
+    },
+    {
+      id: "cloud-9-rooftop",
+      name: "Cloud 9 Sky Bar & Lounge",
+      rating: 4.7,
+      reviewsCount: 164,
+      area: "Ewet Housing Estate",
+      vibe: "Rooftop & Sunset Cocktails",
+      image: "https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=800&q=80",
+      description: "Panoramic skyline views of Uyo with ambient chillhouse tunes, signature mixology, and tapas."
+    },
+    {
+      id: "emerald-pool-lounge",
+      name: "Emerald Poolside & Night Garden",
+      rating: 4.6,
+      reviewsCount: 140,
+      area: "Nwaniba Road",
+      vibe: "Poolside Chill & Live Sax",
+      image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=800&q=80",
+      description: "Lush tropical cabanas, shimmering neon pool waters, and acoustic night sessions."
+    }
+  ],
+  resorts: [
+    {
+      id: "le-meridien",
+      name: "Le Meridien Ibom Golf Resort",
+      rating: 4.8,
+      reviewsCount: 310,
+      area: "Nwaniba Road / Golf Greens",
+      pricePerNight: 85000,
+      badge: "World Class",
+      image: "https://images.unsplash.com/photo-1561501900-3701fa6a0864?auto=format&fit=crop&w=800&q=80",
+      description: "Championship 18-hole golf greens, luxury chalets, and secluded natural palm canopies."
+    },
+    {
+      id: "ibom-tropicana",
+      name: "Ibom Tropicana Resort & Park",
+      rating: 4.6,
+      reviewsCount: 189,
+      area: "Udo Udoma Corridor",
+      pricePerNight: 75000,
+      badge: "Iconic",
+      image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80",
+      description: "Lagoon swimming pools, lush botanical gardens, spa treatments, and family leisure."
+    },
+    {
+      id: "meridian-palms",
+      name: "Meridian Palms Eco-Retreat",
+      rating: 4.7,
+      reviewsCount: 95,
+      area: "Creek Haven, Uyo Outskirts",
+      pricePerNight: 65000,
+      badge: "Eco-Luxury",
+      image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80",
+      description: "Private wooden villas, serene river walks, organic farm-to-table dining, and wellness spas."
+    }
+  ],
   deals: [
     {
       id: "deal-1",
