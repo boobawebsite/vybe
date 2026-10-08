@@ -31,8 +31,8 @@ import { BookingsTab, SavedTab, ProfileTab } from './components/AdditionalTabs';
 import { VYBE_DATA } from './data/vybeData';
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState('welcome');
-  const [activeTab, setActiveTab] = useState('home');
+  const [currentScreen, setCurrentScreen] = useState('main');
+  const [activeTab, setActiveTab] = useState('explore');
   const [selectedHotel, setSelectedHotel] = useState(VYBE_DATA.hotels[0]);
   const [selectedRoom, setSelectedRoom] = useState(VYBE_DATA.hotels[0].rooms[0]);
   const [lastBooking, setLastBooking] = useState(null);
@@ -92,15 +92,88 @@ export default function App() {
                   <span className="w-2 h-2 rounded-full bg-purple-600" />
                 </div>
 
-                <button onClick={() => setCurrentScreen('welcome')} className="text-purple-600 font-bold hover:text-purple-700 bg-purple-50 px-2.5 py-1 rounded-full border border-purple-200">First Page (Welcome)</button>
-                <button onClick={() => setCurrentScreen('auth')} className="text-purple-600 font-bold hover:text-purple-700 bg-purple-50 px-2.5 py-1 rounded-full border border-purple-200">Create Account</button>
-                <button onClick={() => { setCurrentScreen('main'); setActiveTab('home'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Stays</button>
-                <button onClick={() => { setCurrentScreen('main'); setActiveTab('explore'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Living Map</button>
-                <button onClick={() => { setCurrentScreen('main'); setActiveTab('deals'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Deals</button>
-                <button onClick={() => { setCurrentScreen('booking'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Stay Details (Checkout)</button>
-                <button onClick={() => { setCurrentScreen('main'); setActiveTab('bookings'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Reservations ({bookingsList.length})</button>
-                <button onClick={() => { setCurrentScreen('main'); setActiveTab('saved'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Saved ({savedHotelIds.length})</button>
-                <button onClick={() => { setCurrentScreen('main'); setActiveTab('admin'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Admin Portal</button>
+                <button
+                  onClick={() => setCurrentScreen('welcome')}
+                  className="text-purple-600 font-bold hover:text-purple-700 bg-purple-50 px-2.5 py-1 rounded-full border border-purple-200 transition-all hover:bg-purple-100"
+                >
+                  First Page (Welcome)
+                </button>
+                <button
+                  onClick={() => setCurrentScreen('auth')}
+                  className="text-purple-600 font-bold hover:text-purple-700 bg-purple-50 px-2.5 py-1 rounded-full border border-purple-200 transition-all hover:bg-purple-100"
+                >
+                  Create Account
+                </button>
+                <button
+                  onClick={() => { setCurrentScreen('main'); setActiveTab('explore'); }}
+                  className={`font-semibold px-2.5 py-1 rounded-full transition-all ${
+                    currentScreen === 'main' && activeTab === 'explore'
+                      ? 'bg-purple-600 text-white shadow-xs'
+                      : 'text-[#86868b] hover:text-[#1d1d1f]'
+                  }`}
+                >
+                  Living Map (Explore)
+                </button>
+                <button
+                  onClick={() => { setCurrentScreen('main'); setActiveTab('home'); }}
+                  className={`font-semibold px-2.5 py-1 rounded-full transition-all ${
+                    currentScreen === 'main' && activeTab === 'home'
+                      ? 'bg-purple-600 text-white shadow-xs'
+                      : 'text-[#86868b] hover:text-[#1d1d1f]'
+                  }`}
+                >
+                  Stays
+                </button>
+                <button
+                  onClick={() => { setCurrentScreen('main'); setActiveTab('deals'); }}
+                  className={`font-semibold px-2.5 py-1 rounded-full transition-all ${
+                    currentScreen === 'main' && activeTab === 'deals'
+                      ? 'bg-purple-600 text-white shadow-xs'
+                      : 'text-[#86868b] hover:text-[#1d1d1f]'
+                  }`}
+                >
+                  Deals
+                </button>
+                <button
+                  onClick={() => { setCurrentScreen('booking'); }}
+                  className={`font-semibold px-2.5 py-1 rounded-full transition-all ${
+                    currentScreen === 'booking'
+                      ? 'bg-purple-600 text-white shadow-xs'
+                      : 'text-[#86868b] hover:text-[#1d1d1f]'
+                  }`}
+                >
+                  Stay Details (Checkout)
+                </button>
+                <button
+                  onClick={() => { setCurrentScreen('main'); setActiveTab('bookings'); }}
+                  className={`font-semibold px-2.5 py-1 rounded-full transition-all ${
+                    currentScreen === 'main' && activeTab === 'bookings'
+                      ? 'bg-purple-600 text-white shadow-xs'
+                      : 'text-[#86868b] hover:text-[#1d1d1f]'
+                  }`}
+                >
+                  Reservations ({bookingsList.length})
+                </button>
+                <button
+                  onClick={() => { setCurrentScreen('main'); setActiveTab('saved'); }}
+                  className={`font-semibold px-2.5 py-1 rounded-full transition-all ${
+                    currentScreen === 'main' && activeTab === 'saved'
+                      ? 'bg-purple-600 text-white shadow-xs'
+                      : 'text-[#86868b] hover:text-[#1d1d1f]'
+                  }`}
+                >
+                  Saved ({savedHotelIds.length})
+                </button>
+                <button
+                  onClick={() => { setCurrentScreen('main'); setActiveTab('admin'); }}
+                  className={`font-semibold px-2.5 py-1 rounded-full transition-all ${
+                    currentScreen === 'main' && activeTab === 'admin'
+                      ? 'bg-purple-600 text-white shadow-xs'
+                      : 'text-[#86868b] hover:text-[#1d1d1f]'
+                  }`}
+                >
+                  Admin Portal
+                </button>
               </div>
 
             <div className="flex items-center gap-4 text-[#1d1d1f]">
