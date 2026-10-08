@@ -168,7 +168,6 @@ export default function VisionProHome({
       {/* 2. APPLE-STYLE SECTION: "Featured Stays in Uyo" (Hotels) */}
       <section id="hotels-section" className="space-y-12 max-w-7xl mx-auto px-4 sm:px-8 scroll-mt-24">
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <span className="apple-eyebrow text-purple-600">Verified Hospitality</span>
           <h2 className="text-3xl sm:text-5xl font-black text-[#1d1d1f] tracking-tight">
             An infinite canvas for discovering stays.
           </h2>
