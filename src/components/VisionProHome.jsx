@@ -285,7 +285,7 @@ export default function VisionProHome({
             </h2>
           </div>
           <button className="apple-link text-sm">
-            <span>Explore all dining</span>
+            <span>Explore</span>
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
@@ -345,7 +345,7 @@ export default function VisionProHome({
             </h2>
           </div>
           <button className="apple-link text-sm">
-            <span>Explore nightlife</span>
+            <span>Explore</span>
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
@@ -403,7 +403,7 @@ export default function VisionProHome({
             </h2>
           </div>
           <button className="apple-link text-sm">
-            <span>View event calendar</span>
+            <span>View all</span>
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
@@ -458,7 +458,7 @@ export default function VisionProHome({
             </h2>
           </div>
           <button className="apple-link text-sm">
-            <span>View all resorts</span>
+            <span>View all</span>
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
