@@ -329,8 +329,7 @@ export default function VisionProHome({
       <section id="nightlife-section" className="space-y-12 max-w-7xl mx-auto px-4 sm:px-8 scroll-mt-24">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-6">
           <div>
-            <span className="apple-eyebrow text-indigo-600">Nightlife & Lounges</span>
-            <h2 className="text-3xl sm:text-4xl font-black text-[#1d1d1f] tracking-tight mt-1">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#1d1d1f] tracking-tight">
               Pulse of the City After Dark.
             </h2>
           </div>
@@ -382,8 +381,7 @@ export default function VisionProHome({
       <section id="events-section" className="space-y-12 max-w-7xl mx-auto px-4 sm:px-8 scroll-mt-24">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-6">
           <div>
-            <span className="apple-eyebrow text-rose-600">Events & Festivals</span>
-            <h2 className="text-3xl sm:text-4xl font-black text-[#1d1d1f] tracking-tight mt-1">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#1d1d1f] tracking-tight">
               What's happening in Uyo.
             </h2>
           </div>
@@ -437,8 +435,7 @@ export default function VisionProHome({
       <section id="resorts-section" className="space-y-12 max-w-7xl mx-auto px-4 sm:px-8 scroll-mt-24">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-6">
           <div>
-            <span className="apple-eyebrow text-emerald-600">Luxury Resorts & Retreats</span>
-            <h2 className="text-3xl sm:text-4xl font-black text-[#1d1d1f] tracking-tight mt-1">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#1d1d1f] tracking-tight">
               World-Class Escapes in Akwa Ibom.
             </h2>
           </div>
@@ -513,7 +510,6 @@ export default function VisionProHome({
       {/* 5. APPLE-STYLE SECTION: "Why VYBE" Spec Pillars */}
       <section className="rounded-[40px] bg-[#fbfbfd] border border-slate-200/80 p-8 sm:p-14 max-w-7xl mx-auto space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
-          <span className="apple-eyebrow text-purple-600">Trust & Hospitality</span>
           <h3 className="text-3xl font-black text-[#1d1d1f]">Why Discover & Book with VYBE?</h3>
           <p className="text-sm text-[#86868b]">
             A verified platform for local stays, events and local commerce in Akwa Ibom.
