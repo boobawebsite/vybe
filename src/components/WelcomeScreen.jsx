@@ -93,14 +93,6 @@ export default function WelcomeScreen({ onGetStarted, onSignIn, onSelectCategory
                   V<span className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-indigo-400 bg-clip-text text-transparent">Y</span>BE
                 </span>
               </div>
-
-              <nav className="flex items-center gap-6 text-xs text-slate-300 font-normal">
-                <button onClick={onGetStarted} className="hover:text-white transition-colors">Overview</button>
-                <button onClick={() => handleCategoryClick('hotels')} className="hover:text-white transition-colors">Stays & Hotels</button>
-                <button onClick={() => handleCategoryClick('restaurants')} className="hover:text-white transition-colors">Dining</button>
-                <button onClick={() => handleCategoryClick('events')} className="hover:text-white transition-colors">Events</button>
-                <button onClick={() => handleCategoryClick('shops')} className="hover:text-white transition-colors">VYBE Map</button>
-              </nav>
             </div>
 
             <div className="flex items-center gap-3">
@@ -123,12 +115,6 @@ export default function WelcomeScreen({ onGetStarted, onSignIn, onSelectCategory
 
         {/* Central Apple Vision Pro Hero Theatre */}
         <main className="max-w-6xl mx-auto px-10 py-12 w-full flex-1 flex flex-col justify-center items-center text-center space-y-8">
-          {/* Apple Eyebrow */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/15 text-xs font-semibold text-purple-300 tracking-wider uppercase">
-            <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-            <span>The Spatial Discovery Layer for Uyo</span>
-          </div>
-
           {/* Majestic Hero Headline (Apple Scale) */}
           <div className="space-y-4 max-w-4xl">
             <div className="flex items-center justify-center text-7xl xl:text-8xl font-black font-display tracking-tight text-white">
