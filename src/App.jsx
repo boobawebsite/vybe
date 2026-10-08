@@ -75,8 +75,8 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white text-[#1d1d1f] flex flex-col justify-between selection:bg-purple-600 selection:text-white">
-      {/* 1. DESKTOP APPLE GLOBAL NAV & SUBNAV (Visible on lg screens only when not on welcome screen) */}
-      {currentScreen !== 'welcome' && (
+      {/* 1. DESKTOP APPLE GLOBAL NAV & SUBNAV (Visible on lg screens only when not on welcome or auth screen) */}
+      {currentScreen !== 'welcome' && currentScreen !== 'auth' && (
         <div className="hidden lg:block">
           <div className="apple-globalnav text-xs text-[#1d1d1f] px-8 py-2.5">
             <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -93,6 +93,7 @@ export default function App() {
                 </div>
 
                 <button onClick={() => setCurrentScreen('welcome')} className="text-purple-600 font-bold hover:text-purple-700 bg-purple-50 px-2.5 py-1 rounded-full border border-purple-200">First Page (Welcome)</button>
+                <button onClick={() => setCurrentScreen('auth')} className="text-purple-600 font-bold hover:text-purple-700 bg-purple-50 px-2.5 py-1 rounded-full border border-purple-200">Create Account</button>
                 <button onClick={() => { setCurrentScreen('main'); setActiveTab('home'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Stays</button>
                 <button onClick={() => { setCurrentScreen('main'); setActiveTab('explore'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Living Map</button>
                 <button onClick={() => { setCurrentScreen('main'); setActiveTab('deals'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Deals</button>
@@ -217,6 +218,7 @@ export default function App() {
                       setCurrentScreen('booking');
                     }}
                     onGoToWelcome={() => setCurrentScreen('welcome')}
+                    onOpenAuth={() => setCurrentScreen('auth')}
                     savedIds={savedHotelIds}
                     onToggleSave={toggleSaveHotel}
                   />
@@ -339,7 +341,7 @@ export default function App() {
       </main>
 
       {/* 3. BOSS'S EXACT MOBILE BOTTOM NAVIGATION DOCK (5 tabs from design screenshots: Home, Explore, Bookings, Saved, Profile) */}
-      {currentScreen !== 'welcome' && (
+      {currentScreen !== 'welcome' && currentScreen !== 'auth' && (
         <nav className="lg:hidden fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-2xl border-t border-slate-200/90 py-2 px-3 z-50">
           <div className="flex items-center justify-around">
             {[
@@ -372,7 +374,7 @@ export default function App() {
       )}
 
       {/* 4. FOOTER (Desktop only) */}
-      {currentScreen !== 'welcome' && (
+      {currentScreen !== 'welcome' && currentScreen !== 'auth' && (
         <footer className="hidden lg:block border-t border-slate-200 py-14 px-6 mt-20 text-center text-xs text-slate-500 space-y-2 bg-[#fbfbfd]">
           <p className="font-semibold text-slate-800">
             VYBE • The Spatial Layer for City Discovery & Stays — Uyo, Akwa Ibom State, Nigeria

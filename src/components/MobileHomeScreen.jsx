@@ -29,6 +29,7 @@ export default function MobileHomeScreen({
   onSelectExplore,
   onOpenStayDetails,
   onGoToWelcome,
+  onOpenAuth,
   savedIds,
   onToggleSave
 }) {
@@ -82,6 +83,13 @@ export default function MobileHomeScreen({
           <button className="relative w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-700">
             <Bell className="w-4 h-4" />
             <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white" />
+          </button>
+
+          <button
+            onClick={onOpenAuth}
+            className="w-9 h-9 rounded-full bg-purple-50 text-purple-700 flex items-center justify-center border border-purple-200 active:scale-95 transition-transform"
+          >
+            <User className="w-4 h-4" />
           </button>
         </div>
       </div>
