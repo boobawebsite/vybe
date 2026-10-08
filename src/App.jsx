@@ -106,7 +106,9 @@ export default function App() {
                 <div
                   onClick={() => {
                     setCurrentScreen('main');
-                    setActiveTab('explore');
+                    setActiveTab('home');
+                    setActiveCategory('hotels');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                   className="flex items-center cursor-pointer font-bold text-sm tracking-tight"
                 >
