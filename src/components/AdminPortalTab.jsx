@@ -67,7 +67,7 @@ export default function AdminPortalTab() {
       <div className="border-b border-slate-200 pb-8 flex flex-col sm:flex-row justify-between sm:items-end gap-6">
         <div>
           <span className="text-xs uppercase font-extrabold tracking-wider text-purple-600 block">
-            Host & Business Portal
+            Admin Dashboard
           </span>
           <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight mt-1">
             Verification & Analytics

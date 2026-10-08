@@ -349,7 +349,7 @@ export default function App() {
                           className="w-full px-4 py-2 text-left hover:bg-slate-50 flex items-center gap-2.5 text-slate-700 font-medium"
                         >
                           <ShieldCheck className="w-3.5 h-3.5 text-indigo-600" />
-                          <span>Host / Partner Dashboard</span>
+                          <span>Admin Dashboard</span>
                         </button>
 
                         <button
