@@ -188,21 +188,6 @@ export default function WelcomeScreen({ onGetStarted, onSignIn, onSelectCategory
           </div>
         </main>
 
-        {/* Apple Desktop Bottom Bar */}
-        <footer className="w-full border-t border-white/10 bg-black/30 backdrop-blur-md px-10 py-4 flex items-center justify-between text-xs text-slate-400">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-white" />
-            <span className="w-2 h-2 rounded-full bg-white/40" />
-            <span className="w-2 h-2 rounded-full bg-white/40" />
-            <span className="pl-3">Your City. Your <strong className="text-purple-400 font-bold">VYBE.</strong></span>
-          </div>
-
-          <div className="flex items-center gap-6">
-            <span>Uyo, Akwa Ibom State, Nigeria</span>
-            <span>•</span>
-            <span>Verified Luxury Stays & City Discovery</span>
-          </div>
-        </footer>
       </div>
 
       {/* ========================================================================= */}
