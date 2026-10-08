@@ -62,21 +62,23 @@ export default function AdminPortalTab() {
   };
 
   return (
-    <div className="space-y-12 pb-28 text-white max-w-6xl mx-auto px-4">
+    <div className="space-y-12 pb-28 text-slate-900 max-w-6xl mx-auto px-4">
       {/* Top Admin Header */}
-      <div className="border-b border-white/10 pb-8 flex flex-col sm:flex-row justify-between sm:items-end gap-6">
+      <div className="border-b border-slate-200 pb-8 flex flex-col sm:flex-row justify-between sm:items-end gap-6">
         <div>
-          <span className="apple-eyebrow text-purple-400">Master Specification • Section 21 & 27</span>
-          <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight mt-1">
-            Admin Verification & Analytics.
+          <span className="text-xs uppercase font-extrabold tracking-wider text-purple-600 block">
+            Host & Business Portal
+          </span>
+          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight mt-1">
+            Verification & Analytics
           </h1>
-          <p className="text-base text-slate-400 mt-2">
+          <p className="text-base text-slate-600 mt-2">
             City verification queue, listings moderation & commerce metrics for Uyo.
           </p>
         </div>
 
-        {/* Apple Subnav Style Controls */}
-        <div className="flex gap-2 p-1.5 bg-[#161617] rounded-full border border-white/10 self-start sm:self-auto">
+        {/* Subnav Style Controls */}
+        <div className="flex gap-2 p-1.5 bg-slate-100 rounded-full border border-slate-200 self-start sm:self-auto">
           {[
             { id: 'verifications', label: 'KYC & Verifications' },
             { id: 'metrics', label: 'North-Star Metrics' }
@@ -86,8 +88,8 @@ export default function AdminPortalTab() {
               onClick={() => setActiveSubTab(tab.id)}
               className={`px-5 py-2 rounded-full text-xs font-bold transition-all ${
                 activeSubTab === tab.id
-                  ? 'bg-white text-black shadow-md'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-purple-600 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               {tab.label}
@@ -100,37 +102,37 @@ export default function AdminPortalTab() {
         /* Business KYC & Verification Queue */
         <div className="space-y-6">
           <div className="flex items-center justify-between">
-            <h3 className="text-2xl font-bold text-white">
+            <h3 className="text-2xl font-black text-slate-900 tracking-tight">
               Pending Partner Verifications ({businesses.filter(b => b.status === 'pending').length})
             </h3>
-            <span className="text-xs text-slate-400">Physical & Corporate Registry review</span>
+            <span className="text-xs text-slate-500 font-medium">Physical & Corporate Registry review</span>
           </div>
 
           <div className="space-y-4">
             {businesses.map((biz) => (
               <div
                 key={biz.id}
-                className="apple-tile p-6 border border-white/10 bg-[#161617] flex flex-col md:flex-row justify-between items-start md:items-center gap-6"
+                className="rounded-3xl p-6 border border-slate-200 bg-white shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6 hover:border-slate-300 transition-all"
               >
                 <div className="space-y-1.5">
-                  <div className="flex items-center gap-3">
-                    <h4 className="font-extrabold text-lg text-white">{biz.name}</h4>
-                    <span className="px-3 py-0.5 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold text-slate-300">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <h4 className="font-extrabold text-lg text-slate-900">{biz.name}</h4>
+                    <span className="px-3 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-[10px] font-bold text-slate-700">
                       {biz.category}
                     </span>
                     <span className={`px-3 py-0.5 rounded-full text-[10px] font-bold ${
                       biz.status === 'approved'
-                        ? 'bg-emerald-950/80 text-emerald-400 border border-emerald-500/30'
+                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                         : biz.status === 'rejected'
-                        ? 'bg-rose-950/80 text-rose-400 border border-rose-500/30'
-                        : 'bg-amber-950/80 text-amber-400 border border-amber-500/30'
+                        ? 'bg-rose-50 text-rose-700 border border-rose-200'
+                        : 'bg-amber-50 text-amber-700 border border-amber-200'
                     }`}>
                       {biz.status.toUpperCase()}
                     </span>
                   </div>
 
-                  <p className="text-xs text-slate-400">
-                    Manager: <span className="text-slate-200 font-semibold">{biz.manager}</span> ({biz.phone}) • CAC: {biz.cacNumber}
+                  <p className="text-xs text-slate-600">
+                    Manager: <span className="text-slate-900 font-semibold">{biz.manager}</span> ({biz.phone}) • CAC: {biz.cacNumber}
                   </p>
                   <p className="text-xs text-slate-500">📍 {biz.address}</p>
                 </div>
@@ -139,19 +141,19 @@ export default function AdminPortalTab() {
                   <div className="flex items-center gap-3 w-full md:w-auto">
                     <button
                       onClick={() => handleReject(biz.id)}
-                      className="flex-1 md:flex-none px-5 py-2.5 rounded-full bg-white/10 hover:bg-rose-500/20 hover:text-rose-400 text-slate-300 text-xs font-bold transition-all"
+                      className="flex-1 md:flex-none px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-700 text-xs font-bold transition-all border border-slate-200"
                     >
                       Reject
                     </button>
                     <button
                       onClick={() => handleApprove(biz.id)}
-                      className="apple-btn-purple flex-1 md:flex-none text-xs py-2.5 px-6 font-bold"
+                      className="flex-1 md:flex-none px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold shadow-xs active:scale-95 transition-all"
                     >
                       Approve & Verify
                     </button>
                   </div>
                 ) : (
-                  <span className="text-xs font-bold text-slate-500">Action logged</span>
+                  <span className="text-xs font-bold text-slate-400">Action logged</span>
                 )}
               </div>
             ))}
@@ -169,30 +171,30 @@ export default function AdminPortalTab() {
             ].map((stat, i) => {
               const Icon = stat.icon;
               return (
-                <div key={i} className="apple-tile p-6 border border-white/10 bg-[#161617] space-y-3">
-                  <div className="flex items-center justify-between text-slate-400">
+                <div key={i} className="rounded-3xl p-6 border border-slate-200 bg-white shadow-sm space-y-3">
+                  <div className="flex items-center justify-between text-slate-500">
                     <span className="text-xs font-semibold uppercase tracking-wider">{stat.label}</span>
-                    <Icon className="w-5 h-5 text-purple-400" />
+                    <Icon className="w-5 h-5 text-purple-600" />
                   </div>
-                  <div className="text-3xl font-black text-white">{stat.val}</div>
-                  <div className="text-xs font-bold text-emerald-400">{stat.change}</div>
+                  <div className="text-3xl font-black text-slate-900">{stat.val}</div>
+                  <div className="text-xs font-bold text-emerald-600">{stat.change}</div>
                 </div>
               );
             })}
           </div>
 
-          <div className="apple-tile p-8 border border-white/10 bg-[#161617] space-y-4">
-            <h4 className="font-extrabold text-xl text-white">Uyo City Launch Readiness Checklist</h4>
-            <div className="space-y-3 text-sm text-slate-300">
-              <div className="flex items-center gap-3 text-emerald-400">
+          <div className="rounded-3xl p-8 border border-slate-200 bg-white shadow-sm space-y-4">
+            <h4 className="font-black text-xl text-slate-900 tracking-tight">Uyo City Launch Readiness Checklist</h4>
+            <div className="space-y-3 text-sm text-slate-700">
+              <div className="flex items-center gap-3 text-emerald-600">
                 <CheckCircle className="w-5 h-5 flex-shrink-0" />
                 <span>Single-city initial launch (Uyo, Akwa Ibom) strictly configured to avoid market dilution.</span>
               </div>
-              <div className="flex items-center gap-3 text-emerald-400">
+              <div className="flex items-center gap-3 text-emerald-600">
                 <CheckCircle className="w-5 h-5 flex-shrink-0" />
                 <span>Transparent rule-based ranking engine active before collecting behavioral training data.</span>
               </div>
-              <div className="flex items-center gap-3 text-emerald-400">
+              <div className="flex items-center gap-3 text-emerald-600">
                 <CheckCircle className="w-5 h-5 flex-shrink-0" />
                 <span>Nigerian payment channels enabled (Cards, Bank Transfer, Paystack/Flutterwave ready, VYBE Wallet).</span>
               </div>
