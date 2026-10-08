@@ -194,10 +194,7 @@ export default function VisionProHome({
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
-                  <div className="absolute top-4 inset-x-4 flex justify-between items-center text-white">
-                    <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-[11px] font-bold">
-                      {hotel.badge}
-                    </span>
+                  <div className="absolute top-4 right-4 text-white">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -406,9 +403,6 @@ export default function VisionProHome({
 
               <div className="relative z-10 space-y-2 text-white">
                 <div className="flex items-center justify-between">
-                  <span className="px-3 py-1 rounded-full bg-purple-600 text-[10px] font-black uppercase tracking-wider text-white">
-                    {evt.badge}
-                  </span>
                   <span className="text-xs font-semibold text-slate-200">{evt.date} • {evt.time}</span>
                 </div>
 
@@ -461,11 +455,7 @@ export default function VisionProHome({
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 rounded-full bg-emerald-600 text-white text-[10px] font-black uppercase tracking-wider">
-                      {resort.badge}
-                    </span>
-                  </div>
+
                   <div className="absolute bottom-3 left-4 right-4 flex justify-between items-center text-xs text-white">
                     <span className="font-semibold text-slate-200">{resort.area}</span>
                     <span className="font-bold text-amber-300 flex items-center gap-1">

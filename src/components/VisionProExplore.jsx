@@ -403,9 +403,6 @@ export default function VisionProExplore({ onSelectHotel, savedIds = [], onToggl
                       >
                         <Heart className={`w-3 h-3 ${isSaved ? 'fill-rose-500 text-rose-500' : 'text-white'}`} />
                       </button>
-                      <div className="absolute bottom-1 left-1 px-1.5 py-0.5 rounded-md bg-purple-600 text-white text-[8px] font-black uppercase">
-                        {hotel.badge}
-                      </div>
                     </div>
 
                     {/* Hotel Details */}
