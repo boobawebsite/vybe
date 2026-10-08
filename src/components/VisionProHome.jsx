@@ -72,28 +72,26 @@ export default function VisionProHome({
 
         {/* Center-Left Content: Exact location of "Vision Pro" and "New powerful M5 chip..." */}
         <div className="relative z-10 max-w-2xl px-4 sm:px-8 py-8 space-y-4">
-          {/* Hotel Name with Signature Purple Verified Badge */}
+          {/* Hotel Name with Apple-Grade Purple Verified Badge */}
           <h1 className="text-5xl sm:text-7xl font-extrabold text-[#1d1d1f] tracking-tight leading-[1.05] font-display flex items-center flex-wrap">
             <span>{heroHotel.name}</span>
-            <span className="inline-flex items-center ml-2.5 sm:ml-3.5" title="Verified Stay in Uyo">
-              <svg
-                viewBox="0 0 24 24"
-                aria-label="Verified"
-                className="w-8 h-8 sm:w-10 sm:h-10 text-purple-600 drop-shadow-[0_2px_8px_rgba(147,51,234,0.35)]"
-              >
-                <path
-                  fill="currentColor"
-                  d="M22.25 12c0-1.43-.88-2.67-2.19-3.15.2-1.4-.4-2.82-1.53-3.66-1.12-.84-2.6-.77-3.72-.05-.88-1.15-2.34-1.74-3.81-1.74s-2.93.59-3.81 1.74c-1.12-.72-2.6-.79-3.72.05-1.13.84-1.73 2.26-1.53 3.66C.88 9.33 0 10.57 0 12s.88 2.67 2.19 3.15c-.2 1.4.4 2.82 1.53 3.66 1.12.84 2.6.77 3.72.05.88 1.15 2.34 1.74 3.81 1.74s2.93-.59 3.81-1.74c1.12.72 2.6.79 3.72-.05 1.13-.84 1.73-2.26 1.53-3.66 1.31-.48 2.19-1.72 2.19-3.15z"
-                />
-                <path
-                  d="M7.5 12.2l3 3 6.5-6.5"
+            <span
+              className="inline-flex items-center ml-3 sm:ml-4 self-center align-middle"
+              title="Verified VYBE Partner"
+            >
+              <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center shadow-xs ring-2 ring-white/90">
+                <svg
+                  className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5 text-white"
+                  viewBox="0 0 16 16"
                   fill="none"
-                  stroke="#ffffff"
+                  stroke="currentColor"
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                />
-              </svg>
+                >
+                  <polyline points="3.75 8.25 6.5 11 12.25 5.25" />
+                </svg>
+              </span>
             </span>
           </h1>
 
