@@ -131,11 +131,10 @@ export default function AuthScreen({ onLoginSuccess, onBack, initialMode = 'sign
           <div className="max-w-md w-full space-y-6">
             {/* Logo and Tagline */}
             <div>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center">
                 <span className="text-3xl font-black tracking-tight font-display text-slate-950">
                   V<span className="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">Y</span>BE
                 </span>
-                <span className="w-2 h-2 rounded-full bg-purple-600" />
               </div>
               <p className="text-xs font-semibold text-slate-500 mt-1">
                 Discover. Book. Experience.

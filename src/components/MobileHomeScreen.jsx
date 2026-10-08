@@ -59,11 +59,10 @@ export default function MobileHomeScreen({
           onClick={onGoToWelcome}
           className="cursor-pointer active:scale-95 transition-transform"
         >
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center">
             <span className="text-2xl font-black tracking-tight text-slate-900 font-display">
               VYBE
             </span>
-            <span className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_8px_#9333ea]" />
           </div>
           <span className="text-[10px] tracking-widest text-slate-400 uppercase font-bold block -mt-0.5">
             Hotels • Stays • Experiences

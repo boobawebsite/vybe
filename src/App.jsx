@@ -108,10 +108,9 @@ export default function App() {
                     setCurrentScreen('main');
                     setActiveTab('explore');
                   }}
-                  className="flex items-center gap-1.5 cursor-pointer font-bold text-sm tracking-tight"
+                  className="flex items-center cursor-pointer font-bold text-sm tracking-tight"
                 >
                   <span className="text-xl font-black tracking-tight font-display">VYBE</span>
-                  <span className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_8px_#9333ea]" />
                 </div>
 
                 <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-[11px] font-semibold text-slate-700 border border-slate-200/80">

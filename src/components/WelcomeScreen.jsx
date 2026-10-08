@@ -87,12 +87,11 @@ export default function WelcomeScreen({ onGetStarted, onSignIn, onSelectCategory
             <div className="flex items-center gap-8">
               <div
                 onClick={onGetStarted}
-                className="flex items-center gap-2 cursor-pointer font-extrabold text-base tracking-tight"
+                className="flex items-center cursor-pointer font-extrabold text-base tracking-tight"
               >
                 <span className="text-xl font-black font-display tracking-tight text-white">
                   V<span className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-indigo-400 bg-clip-text text-transparent">Y</span>BE
                 </span>
-                <span className="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_8px_#a855f7]" />
               </div>
 
               <nav className="flex items-center gap-6 text-xs text-slate-300 font-normal">

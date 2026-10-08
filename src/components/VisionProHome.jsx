@@ -74,9 +74,8 @@ export default function VisionProHome({
         <div className="relative z-10 max-w-2xl px-4 sm:px-8 py-8 space-y-4">
           {/* Small Brand Eyebrow */}
           <div className="flex items-center gap-2">
-            <span className="text-2xl font-black tracking-tight text-[#1d1d1f] flex items-center gap-1 font-display">
+            <span className="text-2xl font-black tracking-tight text-[#1d1d1f] flex items-center font-display">
               VYBE
-              <span className="w-2.5 h-2.5 rounded-full bg-purple-600 shadow-[0_0_8px_#9333ea]" />
             </span>
             <span className="text-xs uppercase tracking-widest text-[#86868b] font-semibold pl-2 border-l border-slate-300">
               Verified Stays • Uyo
