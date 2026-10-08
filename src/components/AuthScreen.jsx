@@ -74,19 +74,10 @@ export default function AuthScreen({ onLoginSuccess, onBack, initialMode = 'sign
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
               <span>Back to Home</span>
             </button>
-
-            <span className="text-[11px] font-bold uppercase tracking-widest text-purple-300 bg-white/10 px-3 py-1 rounded-full backdrop-blur-md border border-white/15">
-              Uyo • Akwa Ibom State
-            </span>
           </div>
 
           {/* Middle Copy */}
           <div className="relative z-10 max-w-lg space-y-4 my-auto">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/15 text-xs font-semibold text-purple-300">
-              <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-              <span>One Unified Account</span>
-            </div>
-
             <h1 className="text-4xl xl:text-5xl font-black text-white tracking-tight leading-tight">
               Your gateway to luxury stays & curated city experiences.
             </h1>
