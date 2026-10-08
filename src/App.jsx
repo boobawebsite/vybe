@@ -34,8 +34,8 @@ import { BookingsTab, SavedTab, ProfileTab } from './components/AdditionalTabs';
 import { VYBE_DATA } from './data/vybeData';
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState('main');
-  const [activeTab, setActiveTab] = useState('explore');
+  const [currentScreen, setCurrentScreen] = useState('welcome');
+  const [activeTab, setActiveTab] = useState('home');
   const [selectedHotel, setSelectedHotel] = useState(VYBE_DATA.hotels[0]);
   const [selectedRoom, setSelectedRoom] = useState(VYBE_DATA.hotels[0].rooms[0]);
   const [lastBooking, setLastBooking] = useState(null);
@@ -297,12 +297,9 @@ export default function App() {
       <main className="flex-1 w-full">
         {currentScreen === 'welcome' && (
           <WelcomeScreen
-            onGetStarted={() => setCurrentScreen('main')}
+            onGetStarted={() => setCurrentScreen('auth')}
             onSignIn={() => setCurrentScreen('auth')}
-            onSelectCategory={(catId) => {
-              setCurrentScreen('main');
-              setActiveTab(catId === 'shops' ? 'explore' : 'home');
-            }}
+            onSelectCategory={() => setCurrentScreen('auth')}
           />
         )}
 
@@ -311,8 +308,9 @@ export default function App() {
             onLoginSuccess={(userData) => {
               setUser(userData);
               setCurrentScreen('main');
+              setActiveTab('home');
             }}
-            onBack={() => setCurrentScreen('main')}
+            onBack={() => setCurrentScreen('welcome')}
           />
         )}
 
