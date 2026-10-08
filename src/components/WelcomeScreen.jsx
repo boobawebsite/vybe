@@ -100,7 +100,7 @@ export default function WelcomeScreen({ onGetStarted, onSignIn, onSelectCategory
                 <button onClick={() => handleCategoryClick('hotels')} className="hover:text-white transition-colors">Stays & Hotels</button>
                 <button onClick={() => handleCategoryClick('restaurants')} className="hover:text-white transition-colors">Dining</button>
                 <button onClick={() => handleCategoryClick('events')} className="hover:text-white transition-colors">Events</button>
-                <button onClick={() => handleCategoryClick('shops')} className="hover:text-white transition-colors">Living Map</button>
+                <button onClick={() => handleCategoryClick('shops')} className="hover:text-white transition-colors">VYBE Map</button>
               </nav>
             </div>
 

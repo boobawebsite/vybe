@@ -129,7 +129,7 @@ export default function VisionProHome({
               className="apple-btn-blue text-xs sm:text-sm py-2 px-5 flex items-center gap-1.5 whitespace-nowrap"
             >
               <Compass className="w-4 h-4" />
-              <span>Living Map</span>
+              <span>VYBE Map</span>
             </button>
           </div>
         </div>

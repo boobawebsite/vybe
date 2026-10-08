@@ -42,6 +42,7 @@ export default function App() {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
   const [user, setUser] = useState({ name: 'Daniel', email: 'daniel@vybe.ng', accountType: 'personal' });
+  const [authMode, setAuthMode] = useState('signup');
   const [activeCategory, setActiveCategory] = useState('hotels');
   const [savedHotelIds, setSavedHotelIds] = useState(['motion-hotel', 'ibom-tropicana']);
   const [bookingsList, setBookingsList] = useState([]);
@@ -191,7 +192,7 @@ export default function App() {
                   }`}
                 >
                   <Compass className="w-3.5 h-3.5" />
-                  <span>Living Map</span>
+                  <span>VYBE Map</span>
                 </button>
               </nav>
 
@@ -249,7 +250,7 @@ export default function App() {
                   title="My Bookings"
                 >
                   <CalendarCheck className="w-3.5 h-3.5 text-purple-600" />
-                  <span>Trips</span>
+                  <span>Bookings</span>
                   {bookingsList.length > 0 && (
                     <span className="w-4 h-4 rounded-full bg-purple-600 text-white text-[10px] font-black flex items-center justify-center -mr-0.5">
                       {bookingsList.length}
@@ -365,6 +366,7 @@ export default function App() {
                       <div className="pt-1 border-t border-slate-100">
                         <button
                           onClick={() => {
+                            setAuthMode('login');
                             setCurrentScreen('auth');
                             setIsProfileMenuOpen(false);
                           }}
@@ -387,14 +389,24 @@ export default function App() {
       <main className="flex-1 w-full">
         {currentScreen === 'welcome' && (
           <WelcomeScreen
-            onGetStarted={() => setCurrentScreen('auth')}
-            onSignIn={() => setCurrentScreen('auth')}
-            onSelectCategory={() => setCurrentScreen('auth')}
+            onGetStarted={() => {
+              setAuthMode('signup');
+              setCurrentScreen('auth');
+            }}
+            onSignIn={() => {
+              setAuthMode('login');
+              setCurrentScreen('auth');
+            }}
+            onSelectCategory={() => {
+              setAuthMode('signup');
+              setCurrentScreen('auth');
+            }}
           />
         )}
 
         {currentScreen === 'auth' && (
           <AuthScreen
+            initialMode={authMode}
             onLoginSuccess={(userData) => {
               setUser(userData);
               setCurrentScreen('main');
@@ -424,7 +436,10 @@ export default function App() {
                       setCurrentScreen('booking');
                     }}
                     onGoToWelcome={() => setCurrentScreen('welcome')}
-                    onOpenAuth={() => setCurrentScreen('auth')}
+                    onOpenAuth={() => {
+                      setAuthMode('login');
+                      setCurrentScreen('auth');
+                    }}
                     savedIds={savedHotelIds}
                     onToggleSave={toggleSaveHotel}
                   />

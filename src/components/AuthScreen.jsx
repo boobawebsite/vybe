@@ -16,10 +16,14 @@ import {
   Check
 } from 'lucide-react';
 
-export default function AuthScreen({ onLoginSuccess, onBack }) {
-  const [isLogin, setIsLogin] = useState(false);
+export default function AuthScreen({ onLoginSuccess, onBack, initialMode = 'signup' }) {
+  const [isLogin, setIsLogin] = useState(initialMode === 'login');
   const [accountType, setAccountType] = useState('personal'); // 'personal' | 'business'
   const [showPassword, setShowPassword] = useState(false);
+
+  React.useEffect(() => {
+    setIsLogin(initialMode === 'login');
+  }, [initialMode]);
 
   const [formData, setFormData] = useState({
     fullName: '',
