@@ -27,6 +27,7 @@ export default function MobileHomeScreen({
   user,
   onSelectHotel,
   onSelectExplore,
+  onOpenStayDetails,
   savedIds,
   onToggleSave
 }) {
@@ -124,6 +125,32 @@ export default function MobileHomeScreen({
           <SlidersHorizontal className="w-4 h-4" />
         </button>
       </div>
+
+      {/* Quick Direct Banner: Boss's Stay Details & Price Summary Screen */}
+      {onOpenStayDetails && (
+        <div
+          onClick={onOpenStayDetails}
+          className="p-3.5 bg-gradient-to-r from-purple-50 via-purple-100/50 to-purple-50 border border-purple-200 rounded-2xl flex items-center justify-between cursor-pointer active:scale-[0.98] transition-all shadow-xs"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-purple-600 text-white flex items-center justify-center font-black text-xs shadow-xs">
+              1-2-3
+            </div>
+            <div>
+              <div className="font-extrabold text-xs text-slate-900 flex items-center gap-1.5">
+                <span>Motion Hotel • Stay Details</span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-purple-600 text-white font-bold">Boss Design</span>
+              </div>
+              <div className="text-[11px] text-purple-700 font-medium">
+                ₦47,250 • Stepper • Card / Bank / Wallet Checkout
+              </div>
+            </div>
+          </div>
+          <span className="text-xs font-black text-purple-600 bg-white px-3 py-1.5 rounded-xl shadow-xs border border-purple-200/80">
+            Open →
+          </span>
+        </div>
+      )}
 
       {/* 4. CATEGORIES HORIZONTAL CAROUSEL (Purple Active Pill) */}
       <div className="flex items-center gap-2.5 overflow-x-auto hide-scrollbar -mx-4 px-4 pb-1">

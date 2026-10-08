@@ -22,6 +22,7 @@ import VisionProDetail from './components/VisionProDetail';
 import MobileHomeScreen from './components/MobileHomeScreen';
 import MobileDetailScreen from './components/MobileDetailScreen';
 import BookingFlowScreen from './components/BookingFlowScreen';
+import MobileStayCheckoutScreen from './components/MobileStayCheckoutScreen';
 import ConfirmationScreen from './components/ConfirmationScreen';
 import DealsTab from './components/DealsTab';
 import AdminPortalTab from './components/AdminPortalTab';
@@ -60,8 +61,13 @@ export default function App() {
   };
 
   const handleBookingComplete = (bookingData) => {
-    setLastBooking(bookingData);
-    setBookingsList((prev) => [bookingData, ...prev]);
+    const booking = {
+      id: 'VYBE-' + Math.floor(100000 + Math.random() * 900000),
+      date: new Date().toLocaleDateString(),
+      ...bookingData,
+    };
+    setLastBooking(booking);
+    setBookingsList((prev) => [booking, ...prev]);
     setCurrentScreen('confirmation');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -87,6 +93,7 @@ export default function App() {
               <button onClick={() => { setCurrentScreen('main'); setActiveTab('home'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Stays</button>
               <button onClick={() => { setCurrentScreen('main'); setActiveTab('explore'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Living Map</button>
               <button onClick={() => { setCurrentScreen('main'); setActiveTab('deals'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Deals</button>
+              <button onClick={() => { setCurrentScreen('booking'); }} className="text-purple-600 font-bold hover:text-purple-700 bg-purple-50 px-2.5 py-1 rounded-full border border-purple-200">Stay Details (Checkout)</button>
               <button onClick={() => { setCurrentScreen('main'); setActiveTab('bookings'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Reservations ({bookingsList.length})</button>
               <button onClick={() => { setCurrentScreen('main'); setActiveTab('saved'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Saved ({savedHotelIds.length})</button>
               <button onClick={() => { setCurrentScreen('main'); setActiveTab('admin'); }} className="text-[#86868b] hover:text-[#1d1d1f]">Admin Portal</button>
@@ -194,6 +201,11 @@ export default function App() {
                     user={user}
                     onSelectHotel={handleSelectHotel}
                     onSelectExplore={() => setActiveTab('explore')}
+                    onOpenStayDetails={() => {
+                      setSelectedHotel(VYBE_DATA.hotels[0]);
+                      setSelectedRoom(VYBE_DATA.hotels[0].rooms[0]);
+                      setCurrentScreen('booking');
+                    }}
                     savedIds={savedHotelIds}
                     onToggleSave={toggleSaveHotel}
                   />
@@ -275,13 +287,15 @@ export default function App() {
         )}
 
         {currentScreen === 'booking' && (
-          <div className="max-w-2xl mx-auto px-4 py-6">
-            <BookingFlowScreen
-              hotel={selectedHotel}
-              room={selectedRoom}
-              onBack={() => setCurrentScreen('detail')}
-              onBookingSuccess={handleBookingComplete}
-            />
+          <div className="w-full">
+            <div className="max-w-md mx-auto py-2 sm:py-6 sm:px-4">
+              <MobileStayCheckoutScreen
+                hotel={selectedHotel}
+                room={selectedRoom}
+                onBack={() => setCurrentScreen('detail')}
+                onProceedToPayment={handleBookingComplete}
+              />
+            </div>
           </div>
         )}
 
