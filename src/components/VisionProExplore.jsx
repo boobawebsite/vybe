@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   MapPin,
   Star,
   Navigation,
   ChevronRight,
+  ChevronLeft,
   Heart,
   SlidersHorizontal,
   Search,
@@ -37,6 +38,28 @@ export default function VisionProExplore({ onSelectHotel, savedIds = [], onToggl
   const [mapType, setMapType] = useState('default'); // 'default' | 'satellite'
   const [isDrawerExpanded, setIsDrawerExpanded] = useState(false);
 
+  const carouselRef = useRef(null);
+  const hotelRefs = useRef({});
+
+  // Scroll carousel left/right
+  const scrollCarousel = (direction) => {
+    if (carouselRef.current) {
+      const scrollAmount = direction === 'left' ? -340 : 340;
+      carouselRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
+  // Sync carousel position when activePin changes
+  useEffect(() => {
+    if (activePin && hotelRefs.current[activePin.id]) {
+      hotelRefs.current[activePin.id].scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center',
+      });
+    }
+  }, [activePin]);
+
   // Exact categories from boss's screenshot
   const categoryPills = [
     { id: 'hotels', label: 'Hotels', icon: BedDouble },
@@ -64,12 +87,184 @@ export default function VisionProExplore({ onSelectHotel, savedIds = [], onToggl
   return (
     <div className="min-h-screen bg-[#f8f9fa] text-slate-900 font-sans">
       {/* ========================================================================= */}
-      {/* 1. DESKTOP VIEWPORT: GOOGLE MAPS / GOOGLE TRAVEL SPLIT-PANEL EXPERIENCE   */}
+      {/* 1. DESKTOP VIEWPORT: FULL-SCREEN MAP WITH BOTTOM FLOATING HOTEL CAROUSEL  */}
       {/* ========================================================================= */}
-      <div className="hidden lg:flex flex-col h-[calc(100vh-100px)]">
-        {/* Google Travel Top Filter & Search Bar */}
-        <div className="bg-white border-b border-slate-200 px-6 py-3 shadow-2xs z-30 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3 flex-1 max-w-xl">
+      <div className="hidden lg:block relative w-full h-[calc(100vh-62px)] overflow-hidden bg-[#e5e3df]">
+        {/* A. MAP CANVAS (COVERS 100% OF THE SCREEN) */}
+        <div
+          className="w-full h-full relative transition-transform duration-300"
+          style={{ transform: `scale(${mapZoom})`, transformOrigin: 'center center' }}
+        >
+          {/* Map Canvas Background (Light Google Palette: roads, parks, rivers) */}
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100%" height="100%" fill="#f1eee8" />
+
+            {/* Parks & Green Zones (Discovery Park & Greenery) */}
+            <path
+              d="M 520,70 Q 640,40 720,100 T 700,240 Q 600,260 540,190 Z"
+              fill="#c8e6c9"
+              opacity="0.85"
+            />
+            <path
+              d="M 850,300 Q 960,280 1020,350 T 980,450 Q 880,460 840,410 Z"
+              fill="#dcedc8"
+              opacity="0.75"
+            />
+            <circle cx="340" cy="460" r="95" fill="#c8e6c9" opacity="0.6" />
+
+            {/* Rivers / Waterway */}
+            <path
+              d="M -50,190 Q 300,140 520,250 T 950,230 T 1400,320"
+              fill="none"
+              stroke="#aad3df"
+              strokeWidth="28"
+              strokeLinecap="round"
+            />
+
+            {/* Major Highways & Roads (White with Google gold accent) */}
+            {/* Ikot Ekpene Road */}
+            <path
+              d="M 0,240 Q 400,290 680,410 T 1400,600"
+              fill="none"
+              stroke="#ffffff"
+              strokeWidth="18"
+              strokeLinecap="round"
+            />
+            <path
+              d="M 0,240 Q 400,290 680,410 T 1400,600"
+              fill="none"
+              stroke="#fbbf24"
+              strokeWidth="11"
+              strokeLinecap="round"
+              opacity="0.75"
+            />
+
+            {/* Nwaniba Road */}
+            <path
+              d="M 640,0 Q 680,300 760,700"
+              fill="none"
+              stroke="#ffffff"
+              strokeWidth="18"
+              strokeLinecap="round"
+            />
+            <path
+              d="M 640,0 Q 680,300 760,700"
+              fill="none"
+              stroke="#f59e0b"
+              strokeWidth="10"
+              strokeLinecap="round"
+              opacity="0.75"
+            />
+
+            {/* Oron Road */}
+            <path
+              d="M 680,410 Q 920,450 1400,520"
+              fill="none"
+              stroke="#ffffff"
+              strokeWidth="16"
+              strokeLinecap="round"
+            />
+
+            {/* Secondary Grid Lines */}
+            <path d="M 240,0 L 240,900" fill="none" stroke="#ffffff" strokeWidth="7" opacity="0.8" />
+            <path d="M 480,0 L 480,900" fill="none" stroke="#ffffff" strokeWidth="7" opacity="0.8" />
+            <path d="M 900,0 L 900,900" fill="none" stroke="#ffffff" strokeWidth="7" opacity="0.8" />
+            <path d="M 0,520 L 1400,520" fill="none" stroke="#ffffff" strokeWidth="7" opacity="0.8" />
+          </svg>
+
+          {/* Highway & Road Labels */}
+          <div className="absolute top-28 left-20 text-[11px] font-bold text-slate-600 bg-white/90 px-3.5 py-1 rounded-full shadow-xs border border-slate-200">
+            Ikot Ekpene Rd
+          </div>
+
+          <div className="absolute top-52 left-28 text-[11px] font-bold text-slate-600 bg-white/90 px-3.5 py-1 rounded-full shadow-xs border border-slate-200">
+            Nwaniba Rd
+          </div>
+
+          <div className="absolute bottom-48 right-36 text-[11px] font-bold text-slate-600 bg-white/90 px-3.5 py-1 rounded-full shadow-xs border border-slate-200">
+            Oron Rd
+          </div>
+
+          {/* City Center Landmark & Discovery Park */}
+          <div className="absolute top-[48%] left-[52%] -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
+            <span className="text-3xl font-black text-slate-800 tracking-tight block">
+              Uyo
+            </span>
+            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">
+              CITY CENTER
+            </span>
+          </div>
+
+          <div className="absolute top-[20%] left-[56%] flex items-center gap-1.5 bg-emerald-100/90 text-emerald-900 px-3 py-1 rounded-full text-xs font-bold border border-emerald-300 shadow-2xs">
+            <span>🌲</span>
+            <span>Discovery Park</span>
+          </div>
+
+          <div className="absolute top-[60%] left-[64%] flex items-center gap-1.5 bg-blue-100/90 text-blue-900 px-3 py-1 rounded-full text-xs font-bold border border-blue-300 shadow-2xs">
+            <span>🛍️</span>
+            <span>Ibom Plaza</span>
+          </div>
+
+          <div className="absolute top-[68%] left-[70%] flex items-center gap-1.5 bg-emerald-100/90 text-emerald-900 px-3 py-1 rounded-full text-xs font-bold border border-emerald-300 shadow-2xs">
+            <span>🏟️</span>
+            <span>Uyo Township Stadium</span>
+          </div>
+
+          {/* Circular Photo Price Pins (Exact from Boss's Screenshot) */}
+          {VYBE_DATA.hotels.map((hotel) => {
+            const isSelected = activePin?.id === hotel.id;
+            const isHovered = hoveredHotelId === hotel.id;
+
+            return (
+              <div
+                key={hotel.id}
+                style={{ top: `${hotel.coordinates.y}%`, left: `${hotel.coordinates.x}%` }}
+                onClick={() => {
+                  setActivePin(hotel);
+                }}
+                className={`absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer z-30 transition-transform duration-200 ${
+                  isSelected || isHovered ? 'scale-120 z-40' : 'hover:scale-105'
+                }`}
+              >
+                {/* Pin Head: Circular Photo + Price Badge Pill */}
+                <div className="flex flex-col items-center">
+                  {/* Price Pill Badge */}
+                  <div
+                    className={`px-3 py-1 rounded-full text-xs font-black shadow-lg flex items-center gap-1 transition-all ${
+                      isSelected || isHovered
+                        ? 'bg-purple-600 text-white ring-4 ring-purple-600/30'
+                        : 'bg-white text-slate-900 border border-slate-200'
+                    }`}
+                  >
+                    <span>₦{hotel.pricePerNight.toLocaleString()}</span>
+                  </div>
+
+                  {/* Circular Hotel Photo Avatar with Purple Ring */}
+                  <div
+                    className={`w-14 h-14 rounded-full border-3 overflow-hidden shadow-xl -mt-1 bg-white relative ${
+                      isSelected || isHovered
+                        ? 'border-purple-600 ring-4 ring-purple-600/40'
+                        : 'border-white'
+                    }`}
+                  >
+                    <img
+                      src={hotel.image}
+                      alt={hotel.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  {/* Purple Pin Dot Anchor */}
+                  <div className="w-3 h-3 rounded-full bg-purple-600 ring-2 ring-white shadow-md -mt-1.5" />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* B. TOP FLOATING GOOGLE SEARCH & FILTER BAR OVER MAP */}
+        <div className="absolute top-4 left-6 right-6 z-30 flex items-center justify-between gap-4 pointer-events-none">
+          <div className="flex items-center gap-3 flex-1 max-w-2xl pointer-events-auto bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-2xl p-2 shadow-xl">
             {/* Search Input Box */}
             <div className="relative flex-1">
               <Search className="w-4 h-4 text-slate-400 absolute inset-y-0 left-3.5 my-auto pointer-events-none" />
@@ -78,7 +273,7 @@ export default function VisionProExplore({ onSelectHotel, savedIds = [], onToggl
                 placeholder="Search hotels, restaurants, landmarks in Uyo..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-8 py-2.5 rounded-full border border-slate-200 bg-slate-50 hover:bg-white focus:bg-white text-xs text-slate-800 placeholder-slate-400 outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-600/10 transition-all shadow-2xs"
+                className="w-full pl-10 pr-8 py-2 rounded-xl bg-slate-50 hover:bg-white focus:bg-white text-xs text-slate-800 placeholder-slate-400 outline-none border border-slate-200 focus:border-purple-600 focus:ring-2 focus:ring-purple-600/10 transition-all"
               />
               {searchQuery && (
                 <button
@@ -91,17 +286,17 @@ export default function VisionProExplore({ onSelectHotel, savedIds = [], onToggl
             </div>
 
             {/* Quick Filters */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 overflow-x-auto hide-scrollbar">
               {['All', 'Hotels', 'Restaurants', 'Nightlife', 'Events'].map((cat) => {
                 const isActive = selectedFilter === cat.toLowerCase();
                 return (
                   <button
                     key={cat}
                     onClick={() => setSelectedFilter(cat.toLowerCase())}
-                    className={`px-3.5 py-2 rounded-full text-xs font-semibold transition-all border whitespace-nowrap ${
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all border whitespace-nowrap ${
                       isActive
                         ? 'bg-purple-600 text-white border-purple-600 shadow-xs'
-                        : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:border-slate-300'
+                        : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
                     }`}
                   >
                     {cat}
@@ -111,124 +306,189 @@ export default function VisionProExplore({ onSelectHotel, savedIds = [], onToggl
             </div>
           </div>
 
-          {/* Right Status */}
-          <div className="flex items-center gap-3 text-xs text-slate-500 font-medium">
-            <span className="flex items-center gap-1.5 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full border border-emerald-200 font-bold">
+          {/* Right Live Rates Pill */}
+          <div className="pointer-events-auto bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-2xl px-4 py-2 shadow-xl flex items-center gap-3 text-xs text-slate-600 font-medium">
+            <span className="flex items-center gap-1.5 text-emerald-700 font-bold">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               Live Rates Active
             </span>
-            <span>Uyo, Akwa Ibom State</span>
+            <span className="text-slate-300">|</span>
+            <span>Uyo, Akwa Ibom</span>
           </div>
         </div>
 
-        {/* Master Split View (Google Travel Stays List on Left, Interactive Google Vector Map on Right) */}
-        <div className="flex-1 flex overflow-hidden relative">
-          {/* LEFT PANEL: Google Hotels Card List Feed (480px width) */}
-          <div className="w-[490px] bg-white border-r border-slate-200 overflow-y-auto flex flex-col z-20 shadow-sm">
-            {/* List Header */}
-            <div className="p-4 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white/95 backdrop-blur-md z-10">
-              <div>
-                <h2 className="text-base font-extrabold text-slate-900">
-                  {filteredHotels.length} Stays in Uyo
-                </h2>
-                <p className="text-[11px] text-slate-500">
-                  Prices include taxes and fees • Instant confirmation
-                </p>
-              </div>
-
-              <div className="flex items-center gap-1 text-xs text-purple-600 font-bold bg-purple-50 px-2.5 py-1 rounded-xl">
-                <span>Map-synced</span>
+        {/* C. TOP-LEFT FLOATING FOCUSED HOTEL DETAIL CARD (EXACT MATCH TO USER SCREENSHOT) */}
+        {activePin && (
+          <div className="absolute top-20 left-6 z-30 bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-3xl p-3.5 shadow-2xl max-w-md w-[370px] flex gap-3.5 items-center transition-all animate-fadeIn">
+            <div className="relative w-24 h-24 rounded-2xl overflow-hidden flex-shrink-0">
+              <img
+                src={activePin.image}
+                alt={activePin.name}
+                className="w-full h-full object-cover"
+              />
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onToggleSave(activePin.id);
+                }}
+                className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:scale-110 transition-transform"
+              >
+                <Heart className={`w-3.5 h-3.5 ${savedIds.includes(activePin.id) ? 'fill-rose-500 text-rose-500' : 'text-white'}`} />
+              </button>
+              <div className="absolute bottom-1.5 left-1.5 px-2 py-0.5 rounded-md bg-purple-600 text-white text-[8px] font-black uppercase tracking-wider">
+                {activePin.badge}
               </div>
             </div>
 
-            {/* Places List */}
-            <div className="p-4 space-y-4 flex-1">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-1.5 text-xs text-amber-500 font-bold">
+                <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                <span>{activePin.rating}</span>
+                <span className="text-slate-400 font-normal">({activePin.reviewsCount})</span>
+              </div>
+
+              <h4 className="font-extrabold text-sm text-slate-900 truncate mt-0.5">
+                {activePin.name}
+              </h4>
+
+              <p className="text-[11px] text-slate-500 truncate flex items-center gap-1 mt-0.5">
+                <MapPin className="w-3 h-3 text-purple-600 flex-shrink-0" />
+                <span>{activePin.address}</span>
+              </p>
+
+              <div className="flex items-center justify-between pt-2 mt-2 border-t border-slate-100">
+                <div>
+                  <span className="text-sm font-black text-slate-900">
+                    ₦{activePin.pricePerNight.toLocaleString()}
+                  </span>
+                  <span className="text-[10px] text-slate-400 font-normal"> / night</span>
+                </div>
+
+                <button
+                  onClick={() => onSelectHotel(activePin)}
+                  className="px-4 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold shadow-xs active:scale-95 transition-all"
+                >
+                  View
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* D. BOTTOM-RIGHT FLOATING MAP CONTROLS (ZOOM & RECENTER) */}
+        <div className="absolute bottom-40 right-6 z-40 flex flex-col items-center gap-2.5">
+          {/* Recenter / Locate Me Button */}
+          <button
+            onClick={() => {
+              setMapZoom(1);
+              setActivePin(VYBE_DATA.hotels[0]);
+            }}
+            className="w-12 h-12 rounded-full bg-white border border-slate-200 shadow-xl flex items-center justify-center text-purple-600 hover:bg-slate-50 transition-all active:scale-95"
+            title="Locate Me / Recenter"
+          >
+            <Navigation className="w-5 h-5 fill-purple-600 text-purple-600" />
+          </button>
+
+          {/* Zoom Controls */}
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden flex flex-col">
+            <button
+              onClick={() => setMapZoom((prev) => Math.min(prev + 0.2, 1.8))}
+              className="w-11 h-10 flex items-center justify-center text-slate-700 hover:bg-slate-50 border-b border-slate-100 active:scale-95"
+              title="Zoom In"
+            >
+              <Plus className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => setMapZoom((prev) => Math.max(prev - 0.2, 0.8))}
+              className="w-11 h-10 flex items-center justify-center text-slate-700 hover:bg-slate-50 active:scale-95"
+              title="Zoom Out"
+            >
+              <Minus className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* E. BOTTOM FLOATING HOTEL CAROUSEL ON MAP (HIGHLIGHTED BY USER IN RED BOXES) */}
+        <div className="absolute bottom-5 inset-x-0 z-30 px-6 pointer-events-none">
+          <div className="pointer-events-auto flex items-center gap-3 w-full">
+            {/* Scroll Left Button */}
+            <button
+              onClick={() => scrollCarousel('left')}
+              className="w-11 h-11 rounded-full bg-white/95 backdrop-blur-md border border-slate-200 shadow-xl flex items-center justify-center text-slate-700 hover:text-purple-600 hover:bg-white active:scale-90 transition-all flex-shrink-0"
+              title="Previous Stays"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+
+            {/* Horizontal Scrollable Track */}
+            <div
+              ref={carouselRef}
+              className="flex items-center gap-4 overflow-x-auto hide-scrollbar scroll-smooth py-2 flex-1"
+            >
               {filteredHotels.map((hotel) => {
                 const isSelected = activePin?.id === hotel.id;
                 const isSaved = savedIds.includes(hotel.id);
+                const roomSpec = hotel.rooms[0] || { title: 'Deluxe Room', guests: 2, size: '32 m²' };
+
                 return (
                   <div
                     key={hotel.id}
-                    onMouseEnter={() => {
-                      setHoveredHotelId(hotel.id);
-                      setActivePin(hotel);
-                    }}
+                    ref={(el) => (hotelRefs.current[hotel.id] = el)}
+                    onClick={() => setActivePin(hotel)}
+                    onMouseEnter={() => setHoveredHotelId(hotel.id)}
                     onMouseLeave={() => setHoveredHotelId(null)}
-                    onClick={() => {
-                      setActivePin(hotel);
-                      onSelectHotel(hotel);
-                    }}
-                    className={`rounded-3xl border transition-all cursor-pointer overflow-hidden p-3.5 flex gap-4 ${
+                    className={`w-[330px] min-w-[330px] rounded-3xl p-3 border transition-all duration-300 cursor-pointer flex gap-3.5 items-center select-none shadow-xl ${
                       isSelected
-                        ? 'border-purple-600 ring-2 ring-purple-600/20 bg-purple-50/20 shadow-md'
-                        : 'border-slate-200/90 bg-white hover:border-slate-300 hover:shadow-xs'
+                        ? 'bg-white ring-2 ring-purple-600 border-purple-600 scale-[1.02] shadow-2xl'
+                        : 'bg-white/95 backdrop-blur-xl border-slate-200/90 hover:bg-white hover:border-purple-300 hover:shadow-2xl'
                     }`}
                   >
-                    {/* Hotel Image with Badges */}
-                    <div className="relative w-36 h-36 rounded-2xl overflow-hidden flex-shrink-0">
+                    {/* Hotel Thumbnail */}
+                    <div className="relative w-24 h-24 rounded-2xl overflow-hidden flex-shrink-0">
                       <img
                         src={hotel.image}
                         alt={hotel.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover"
                       />
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           onToggleSave(hotel.id);
                         }}
-                        className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:scale-110 transition-transform"
+                        className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:scale-110 transition-transform"
                       >
-                        <Heart className={`w-3.5 h-3.5 ${isSaved ? 'fill-rose-500 text-rose-500' : 'text-white'}`} />
+                        <Heart className={`w-3 h-3 ${isSaved ? 'fill-rose-500 text-rose-500' : 'text-white'}`} />
                       </button>
-
-                      <div className="absolute bottom-2 left-2 px-2 py-0.5 rounded-full bg-purple-600 text-white text-[9px] font-black uppercase tracking-wider">
+                      <div className="absolute bottom-1 left-1 px-1.5 py-0.5 rounded-md bg-purple-600 text-white text-[8px] font-black uppercase">
                         {hotel.badge}
                       </div>
                     </div>
 
-                    {/* Details */}
-                    <div className="flex-1 min-w-0 flex flex-col justify-between">
-                      <div className="space-y-1">
-                        <div className="flex items-start justify-between gap-1">
-                          <h3 className="font-extrabold text-sm text-slate-900 truncate">
-                            {hotel.name}
-                          </h3>
+                    {/* Hotel Details */}
+                    <div className="flex-1 min-w-0 flex flex-col justify-between h-24 py-0.5">
+                      <div>
+                        <div className="flex items-center gap-1 text-[11px] text-amber-500 font-bold">
+                          <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                          <span>{hotel.rating}</span>
+                          <span className="text-slate-400 font-normal">({hotel.reviewsCount})</span>
                         </div>
 
-                        {/* Rating */}
-                        <div className="flex items-center gap-1.5 text-xs text-slate-600">
-                          <div className="flex items-center gap-0.5 text-amber-500 font-bold">
-                            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                            <span>{hotel.rating}</span>
-                          </div>
-                          <span>({hotel.reviewsCount} reviews)</span>
-                        </div>
+                        <h4 className="font-extrabold text-xs text-slate-900 truncate mt-0.5">
+                          {hotel.name}
+                        </h4>
 
-                        <p className="text-[11px] text-slate-500 flex items-center gap-1 truncate">
-                          <MapPin className="w-3 h-3 text-purple-600 flex-shrink-0" />
+                        <p className="text-[10px] text-slate-500 truncate flex items-center gap-0.5 mt-0.5">
+                          <MapPin className="w-2.5 h-2.5 text-purple-600 flex-shrink-0" />
                           <span>{hotel.address}</span>
                         </p>
-
-                        {/* Amenities Tags */}
-                        <div className="flex flex-wrap gap-1 pt-1">
-                          {hotel.amenities.slice(0, 3).map((am, i) => (
-                            <span
-                              key={i}
-                              className="text-[10px] font-medium bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md"
-                            >
-                              {am}
-                            </span>
-                          ))}
-                        </div>
                       </div>
 
-                      {/* Pricing and Action */}
-                      <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
+                      <div className="flex items-center justify-between pt-1 border-t border-slate-100">
                         <div>
-                          <span className="text-base font-black text-slate-900">
+                          <span className="text-xs font-black text-slate-900">
                             ₦{hotel.pricePerNight.toLocaleString()}
                           </span>
-                          <span className="text-[10px] text-slate-400 font-normal"> / night</span>
+                          <span className="text-[9px] text-slate-400 font-normal"> / nt</span>
                         </div>
 
                         <button
@@ -236,7 +496,7 @@ export default function VisionProExplore({ onSelectHotel, savedIds = [], onToggl
                             e.stopPropagation();
                             onSelectHotel(hotel);
                           }}
-                          className="px-4 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold transition-all shadow-xs active:scale-95"
+                          className="px-3.5 py-1 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-[11px] font-bold shadow-xs active:scale-95 transition-all"
                         >
                           View
                         </button>
@@ -246,248 +506,15 @@ export default function VisionProExplore({ onSelectHotel, savedIds = [], onToggl
                 );
               })}
             </div>
-          </div>
 
-          {/* RIGHT PANEL: Interactive Google Vector Map Canvas */}
-          <div className="flex-1 relative bg-[#e5e3df] overflow-hidden">
-            {/* Google Vector Map Canvas */}
-            <div
-              className="w-full h-full relative transition-transform duration-300"
-              style={{ transform: `scale(${mapZoom})`, transformOrigin: 'center center' }}
+            {/* Scroll Right Button */}
+            <button
+              onClick={() => scrollCarousel('right')}
+              className="w-11 h-11 rounded-full bg-white/95 backdrop-blur-md border border-slate-200 shadow-xl flex items-center justify-center text-slate-700 hover:text-purple-600 hover:bg-white active:scale-90 transition-all flex-shrink-0"
+              title="Next Stays"
             >
-              {/* Map Canvas Background (Light Google Palette: roads, parks, rivers) */}
-              <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                <rect width="100%" height="100%" fill="#f1eee8" />
-
-                {/* Parks & Green Zones (Discovery Park & Greenery) */}
-                <path
-                  d="M 450,80 Q 520,60 580,110 T 560,200 Q 500,230 460,180 Z"
-                  fill="#c8e6c9"
-                  opacity="0.8"
-                />
-                <path
-                  d="M 680,320 Q 760,300 820,360 T 780,440 Q 700,450 670,400 Z"
-                  fill="#dcedc8"
-                  opacity="0.7"
-                />
-                <circle cx="280" cy="420" r="80" fill="#c8e6c9" opacity="0.6" />
-
-                {/* Rivers / Waterway */}
-                <path
-                  d="M -50,180 Q 250,140 420,240 T 800,220 T 1200,300"
-                  fill="none"
-                  stroke="#aad3df"
-                  strokeWidth="24"
-                  strokeLinecap="round"
-                />
-
-                {/* Major Highways & Roads (White with border like Google Maps) */}
-                {/* Ikot Ekpene Road */}
-                <path
-                  d="M 0,220 Q 320,260 550,380 T 1100,560"
-                  fill="none"
-                  stroke="#ffffff"
-                  strokeWidth="16"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M 0,220 Q 320,260 550,380 T 1100,560"
-                  fill="none"
-                  stroke="#fbbf24"
-                  strokeWidth="10"
-                  strokeLinecap="round"
-                  opacity="0.7"
-                />
-
-                {/* Nwaniba Road */}
-                <path
-                  d="M 520,0 Q 550,280 620,650"
-                  fill="none"
-                  stroke="#ffffff"
-                  strokeWidth="16"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M 520,0 Q 550,280 620,650"
-                  fill="none"
-                  stroke="#f59e0b"
-                  strokeWidth="9"
-                  strokeLinecap="round"
-                  opacity="0.7"
-                />
-
-                {/* Oron Road */}
-                <path
-                  d="M 550,380 Q 750,420 1100,480"
-                  fill="none"
-                  stroke="#ffffff"
-                  strokeWidth="14"
-                  strokeLinecap="round"
-                />
-
-                {/* Secondary Grid Lines */}
-                <path d="M 200,0 L 200,800" fill="none" stroke="#ffffff" strokeWidth="6" opacity="0.8" />
-                <path d="M 400,0 L 400,800" fill="none" stroke="#ffffff" strokeWidth="6" opacity="0.8" />
-                <path d="M 750,0 L 750,800" fill="none" stroke="#ffffff" strokeWidth="6" opacity="0.8" />
-                <path d="M 0,480 L 1200,480" fill="none" stroke="#ffffff" strokeWidth="6" opacity="0.8" />
-              </svg>
-
-              {/* Highway & Road Labels (Exact from Screenshot) */}
-              <div className="absolute top-24 left-16 text-[11px] font-bold text-slate-600 bg-white/90 px-3 py-1 rounded-full shadow-xs border border-slate-200">
-                Ikot Ekpene Rd
-              </div>
-
-              <div className="absolute top-44 left-24 text-[11px] font-bold text-slate-600 bg-white/90 px-3 py-1 rounded-full shadow-xs border border-slate-200">
-                Nwaniba Rd
-              </div>
-
-              <div className="absolute bottom-40 right-28 text-[11px] font-bold text-slate-600 bg-white/90 px-3 py-1 rounded-full shadow-xs border border-slate-200">
-                Oron Rd
-              </div>
-
-              {/* City Center Landmark & Discovery Park */}
-              <div className="absolute top-[48%] left-[52%] -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
-                <span className="text-2xl font-black text-slate-800 tracking-tight block">
-                  Uyo
-                </span>
-                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                  City Center
-                </span>
-              </div>
-
-              <div className="absolute top-[22%] left-[54%] flex items-center gap-1.5 bg-emerald-100/90 text-emerald-900 px-3 py-1 rounded-full text-xs font-bold border border-emerald-300 shadow-2xs">
-                <span>🌲</span>
-                <span>Discovery Park</span>
-              </div>
-
-              <div className="absolute top-[58%] left-[62%] flex items-center gap-1.5 bg-blue-100/90 text-blue-900 px-3 py-1 rounded-full text-xs font-bold border border-blue-300 shadow-2xs">
-                <span>🛍️</span>
-                <span>Ibom Plaza</span>
-              </div>
-
-              <div className="absolute top-[66%] left-[68%] flex items-center gap-1.5 bg-emerald-100/90 text-emerald-900 px-3 py-1 rounded-full text-xs font-bold border border-emerald-300 shadow-2xs">
-                <span>🏟️</span>
-                <span>Uyo Township Stadium</span>
-              </div>
-
-              {/* Circular Photo Price Pins (Exact from Boss's Screenshot) */}
-              {VYBE_DATA.hotels.map((hotel) => {
-                const isSelected = activePin?.id === hotel.id;
-                const isHovered = hoveredHotelId === hotel.id;
-
-                return (
-                  <div
-                    key={hotel.id}
-                    style={{ top: `${hotel.coordinates.y}%`, left: `${hotel.coordinates.x}%` }}
-                    onClick={() => {
-                      setActivePin(hotel);
-                      onSelectHotel(hotel);
-                    }}
-                    className={`absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer z-30 transition-transform duration-200 ${
-                      isSelected || isHovered ? 'scale-115 z-40' : 'hover:scale-105'
-                    }`}
-                  >
-                    {/* Pin Head: Circular Photo + Price Badge Pill */}
-                    <div className="flex flex-col items-center">
-                      {/* Price Pill Badge */}
-                      <div
-                        className={`px-3 py-1 rounded-full text-xs font-black shadow-lg flex items-center gap-1 transition-all ${
-                          isSelected || isHovered
-                            ? 'bg-purple-600 text-white ring-4 ring-purple-600/30'
-                            : 'bg-white text-slate-900 border border-slate-200'
-                        }`}
-                      >
-                        <span>₦{hotel.pricePerNight.toLocaleString()}</span>
-                      </div>
-
-                      {/* Circular Hotel Photo Avatar with Purple Ring */}
-                      <div
-                        className={`w-14 h-14 rounded-full border-3 overflow-hidden shadow-xl -mt-1 bg-white relative ${
-                          isSelected || isHovered
-                            ? 'border-purple-600 ring-4 ring-purple-600/40'
-                            : 'border-white'
-                        }`}
-                      >
-                        <img
-                          src={hotel.image}
-                          alt={hotel.name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-
-                      {/* Purple Pin Dot Anchor */}
-                      <div className="w-3 h-3 rounded-full bg-purple-600 ring-2 ring-white shadow-md -mt-1.5" />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Google Map Floating Control Buttons (Zoom, GPS, Map Layer) */}
-            <div className="absolute bottom-6 right-6 flex flex-col gap-2 z-30">
-              {/* Recenter / Locate Me Button */}
-              <button
-                onClick={() => {
-                  setMapZoom(1);
-                  setActivePin(VYBE_DATA.hotels[0]);
-                }}
-                className="w-11 h-11 rounded-2xl bg-white border border-slate-200 shadow-md flex items-center justify-center text-slate-700 hover:text-purple-600 hover:bg-slate-50 transition-all active:scale-95"
-                title="Locate Me / Recenter"
-              >
-                <Navigation className="w-5 h-5 fill-purple-600 text-purple-600" />
-              </button>
-
-              {/* Zoom Controls */}
-              <div className="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden flex flex-col">
-                <button
-                  onClick={() => setMapZoom((prev) => Math.min(prev + 0.2, 1.8))}
-                  className="w-11 h-10 flex items-center justify-center text-slate-700 hover:bg-slate-50 border-b border-slate-100 active:scale-95"
-                  title="Zoom In"
-                >
-                  <Plus className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => setMapZoom((prev) => Math.max(prev - 0.2, 0.8))}
-                  className="w-11 h-10 flex items-center justify-center text-slate-700 hover:bg-slate-50 active:scale-95"
-                  title="Zoom Out"
-                >
-                  <Minus className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-
-            {/* Floating Info-Card when pin is selected */}
-            {activePin && (
-              <div className="absolute top-6 left-6 z-30 bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-3xl p-4 shadow-xl max-w-sm flex gap-3.5 items-center">
-                <img
-                  src={activePin.image}
-                  alt={activePin.name}
-                  className="w-20 h-20 rounded-2xl object-cover flex-shrink-0"
-                />
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5 text-xs text-amber-500 font-bold">
-                    <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                    <span>{activePin.rating}</span>
-                    <span className="text-slate-400 font-normal">({activePin.reviewsCount})</span>
-                  </div>
-                  <h4 className="font-extrabold text-sm text-slate-900 truncate mt-0.5">
-                    {activePin.name}
-                  </h4>
-                  <p className="text-[11px] text-slate-500 truncate">{activePin.address}</p>
-                  <div className="flex items-center justify-between pt-1 mt-1 border-t border-slate-100">
-                    <span className="text-xs font-black text-slate-900">
-                      ₦{activePin.pricePerNight.toLocaleString()} / night
-                    </span>
-                    <button
-                      onClick={() => onSelectHotel(activePin)}
-                      className="px-3 py-1 rounded-xl bg-purple-600 text-white text-[11px] font-bold hover:bg-purple-700 shadow-xs"
-                    >
-                      View
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
+              <ChevronRight className="w-5 h-5" />
+            </button>
           </div>
         </div>
       </div>
