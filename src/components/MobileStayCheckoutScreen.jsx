@@ -51,9 +51,6 @@ export default function MobileStayCheckoutScreen({
               VYBE
             </span>
           </div>
-          <span className="text-[8px] tracking-widest text-slate-400 uppercase font-bold block">
-            HOTELS • STAYS • EXPERIENCES
-          </span>
         </div>
 
         {/* 1 Details - 2 Payment - 3 Confirm Stepper */}

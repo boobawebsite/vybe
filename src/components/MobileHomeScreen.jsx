@@ -64,9 +64,6 @@ export default function MobileHomeScreen({
               VYBE
             </span>
           </div>
-          <span className="text-[10px] tracking-widest text-slate-400 uppercase font-bold block -mt-0.5">
-            Hotels • Stays • Experiences
-          </span>
         </div>
 
         {/* Uyo Location Dropdown & Notification Bell */}
@@ -138,29 +135,44 @@ export default function MobileHomeScreen({
         </button>
       </div>
 
-      {/* Quick Direct Banner: Boss's Stay Details & Price Summary Screen */}
+      {/* Featured Luxury Stay: Motion Hotel */}
       {onOpenStayDetails && (
         <div
           onClick={onOpenStayDetails}
-          className="p-3.5 bg-gradient-to-r from-purple-50 via-purple-100/50 to-purple-50 border border-purple-200 rounded-2xl flex items-center justify-between cursor-pointer active:scale-[0.98] transition-all shadow-xs"
+          className="p-3 bg-white border border-slate-200/90 rounded-2xl flex items-center justify-between cursor-pointer active:scale-[0.98] transition-all shadow-xs hover:border-purple-300 group"
         >
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-purple-600 text-white flex items-center justify-center font-black text-xs shadow-xs">
-              1-2-3
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="relative w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 bg-slate-100">
+              <img
+                src={VYBE_DATA.hotels[0].image}
+                alt={VYBE_DATA.hotels[0].name}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
             </div>
-            <div>
-              <div className="font-extrabold text-xs text-slate-900 flex items-center gap-1.5">
-                <span>Motion Hotel • Stay Details</span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-purple-600 text-white font-bold">Boss Design</span>
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5">
+                <span className="font-bold text-xs text-slate-900 truncate">
+                  {VYBE_DATA.hotels[0].name}
+                </span>
+                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-purple-50 text-purple-700 text-[10px] font-semibold border border-purple-200/80 flex-shrink-0">
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-600" />
+                  Verified
+                </span>
               </div>
-              <div className="text-[11px] text-purple-700 font-medium">
-                ₦47,250 • Stepper • Card / Bank / Wallet Checkout
+              <div className="text-[11px] text-slate-500 truncate mt-0.5">
+                <span className="font-extrabold text-slate-900">
+                  ₦{VYBE_DATA.hotels[0].pricePerNight.toLocaleString()}
+                </span>
+                <span className="text-slate-400"> / night</span>
+                <span> • </span>
+                <span>{VYBE_DATA.hotels[0].address}</span>
               </div>
             </div>
           </div>
-          <span className="text-xs font-black text-purple-600 bg-white px-3 py-1.5 rounded-xl shadow-xs border border-purple-200/80">
-            Open →
-          </span>
+
+          <button className="flex-shrink-0 ml-2 px-3 py-1.5 rounded-xl bg-purple-50 text-purple-700 text-xs font-bold border border-purple-200 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+            Book →
+          </button>
         </div>
       )}
 

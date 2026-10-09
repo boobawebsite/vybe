@@ -468,15 +468,11 @@ export default function VisionProExplore({ onSelectHotel, savedIds = [], onToggl
         <div className="px-4 pt-3 pb-2 bg-white sticky top-0 z-30">
           <div className="flex items-center justify-between">
             <div>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center">
                 <span className="text-2xl font-black tracking-tight text-slate-950 font-display">
                   VYBE
                 </span>
-                <span className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_8px_#9333ea]" />
               </div>
-              <span className="text-[9px] tracking-widest text-slate-400 uppercase font-bold block -mt-0.5">
-                HOTELS • STAYS • EXPERIENCES
-              </span>
             </div>
 
             <div className="flex items-center gap-2">
