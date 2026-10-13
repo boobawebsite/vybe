@@ -114,11 +114,6 @@ export default function App() {
                 >
                   <span className="text-xl font-black tracking-tight font-display">VYBE</span>
                 </div>
-
-                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-[11px] font-semibold text-slate-700 border border-slate-200/80">
-                  <MapPin className="w-3 h-3 text-purple-600" />
-                  <span>Uyo, Akwa Ibom</span>
-                </div>
               </div>
 
               {/* Primary Navigation Tabs */}
@@ -177,24 +172,6 @@ export default function App() {
                 >
                   Resorts
                 </button>
-
-                <div className="h-4 w-px bg-slate-200 mx-1" />
-
-                <button
-                  onClick={() => {
-                    setCurrentScreen('main');
-                    setActiveTab('explore');
-                    setActiveCategory('map');
-                  }}
-                  className={`font-semibold px-3.5 py-1.5 rounded-full text-xs transition-all flex items-center gap-1.5 ${
-                    currentScreen === 'main' && activeTab === 'explore'
-                      ? 'bg-purple-600 text-white shadow-xs'
-                      : 'text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200/80'
-                  }`}
-                >
-                  <Compass className="w-3.5 h-3.5" />
-                  <span>VYBE Map</span>
-                </button>
               </nav>
 
               {/* Right Side Utility Controls */}
@@ -240,24 +217,7 @@ export default function App() {
                   )}
                 </button>
 
-                {/* Reservations Button with Count */}
-                <button
-                  onClick={() => { setCurrentScreen('main'); setActiveTab('bookings'); }}
-                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border transition-all text-xs font-semibold ${
-                    currentScreen === 'main' && activeTab === 'bookings'
-                      ? 'bg-purple-50 text-purple-700 border-purple-200'
-                      : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-                  }`}
-                  title="My Bookings"
-                >
-                  <CalendarCheck className="w-3.5 h-3.5 text-purple-600" />
-                  <span>Bookings</span>
-                  {bookingsList.length > 0 && (
-                    <span className="w-4 h-4 rounded-full bg-purple-600 text-white text-[10px] font-black flex items-center justify-center -mr-0.5">
-                      {bookingsList.length}
-                    </span>
-                  )}
-                </button>
+
 
                 {/* User Profile Avatar Dropdown */}
                 <div className="relative">
